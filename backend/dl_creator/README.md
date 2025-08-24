@@ -48,8 +48,6 @@ Before running this application, make sure you have the following installed:
 The application uses H2 in-memory database, so no external database setup is needed.
 
 ```bash
-# Clone the repository
-git clone https://github.com/ZetaReticuli844/Dl-Creator-YS-Backend.git
 cd dl_creator
 
 # Build the project
