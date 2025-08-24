@@ -1,0 +1,90 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Rasa Chatbot Deployment on AWS'
+
+Parameters:
+  InstanceType:
+    Type: String
+    Default: t3.medium
+    Description: EC2 instance type for the chatbot
+
+Resources:
+  ChatbotEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-0c02fb55956c7d316  # Amazon Linux 2
+      InstanceType: !Ref InstanceType
+      KeyName: !Ref KeyName
+      SecurityGroups:
+        - !Ref ChatbotSecurityGroup
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          yum update -y
+          yum install -y python3 python3-pip git
+          
+          # Clone your repository
+          git clone ${RepositoryUrl} /opt/chatbot
+          cd /opt/chatbot
+          
+          # Install dependencies
+          pip3 install -r requirements.txt
+          
+          # Train the model
+          rasa train
+          
+          # Start services
+          systemctl enable rasa-actions
+          systemctl enable rasa-server
+          systemctl start rasa-actions
+          systemctl start rasa-server
+
+  ChatbotSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for Rasa chatbot
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 5005
+          ToPort: 5005
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 5055
+          ToPort: 5055
+          CidrIp: 0.0.0.0/0
+
+  ChatbotLoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Type: application
+      Scheme: internet-facing
+      SecurityGroups:
+        - !Ref LoadBalancerSecurityGroup
+
+  LoadBalancerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for load balancer
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+
+Outputs:
+  ChatbotURL:
+    Description: URL of the deployed chatbot
+    Value: !Sub "http://${ChatbotLoadBalancer.DNSName}"
+    Export:
+      Name: !Sub "${AWS::StackName}-ChatbotURL"
+
+
+
+

@@ -1,0 +1,143 @@
+version: '3.8'
+
+services:
+  # Rasa Action Server
+  action-server:
+    build: .
+    container_name: license-chatbot-actions
+    ports:
+      - "5055:5055"
+    volumes:
+      - ./actions:/app/actions
+      - ./domain.yml:/app/domain.yml
+      - ./config.yml:/app/config.yml
+    environment:
+      - RASA_SERVER_URL=http://rasa-server:5005
+      - RASA_TOKEN=${RASA_TOKEN:-}
+    command: rasa run actions --port 5055 --cors "*"
+    networks:
+      - chatbot-network
+    restart: unless-stopped
+
+  # Rasa Server
+  rasa-server:
+    build: .
+    container_name: license-chatbot-rasa
+    ports:
+      - "5005:5005"
+    volumes:
+      - ./models:/app/models
+      - ./data:/app/data
+      - ./config.yml:/app/config.yml
+      - ./domain.yml:/app/domain.yml
+      - ./endpoints.yml:/app/endpoints.yml
+    environment:
+      - RASA_TOKEN=${RASA_TOKEN:-}
+      - RASA_ACTIONS_URL=http://action-server:5055/webhook
+    depends_on:
+      - action-server
+    networks:
+      - chatbot-network
+    restart: unless-stopped
+    command: rasa run --port 5005 --cors "*" --enable-api
+
+  # PostgreSQL Database (for future database integration)
+  postgres:
+    image: postgres:15-alpine
+    container_name: license-chatbot-db
+    environment:
+      POSTGRES_DB: license_db
+      POSTGRES_USER: ${POSTGRES_USER:-rasa_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-rasa_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - chatbot-network
+    restart: unless-stopped
+
+  # Redis (for session storage and caching)
+  redis:
+    image: redis:7-alpine
+    container_name: license-chatbot-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - chatbot-network
+    restart: unless-stopped
+
+  # MongoDB (alternative database option)
+  mongodb:
+    image: mongo:6
+    container_name: license-chatbot-mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER:-rasa_user}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-rasa_password}
+      MONGO_INITDB_DATABASE: license_db
+    volumes:
+      - mongo_data:/data/db
+      - ./database/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    ports:
+      - "27017:27017"
+    networks:
+      - chatbot-network
+    restart: unless-stopped
+
+  # Nginx (reverse proxy and load balancer)
+  nginx:
+    image: nginx:alpine
+    container_name: license-chatbot-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - rasa-server
+      - action-server
+    networks:
+      - chatbot-network
+    restart: unless-stopped
+
+  # Monitoring and Logging
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: license-chatbot-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    networks:
+      - chatbot-network
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: license-chatbot-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana:/etc/grafana/provisioning
+    networks:
+      - chatbot-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+  mongo_data:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  chatbot-network:
+    driver: bridge

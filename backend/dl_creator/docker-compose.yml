@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  # Spring Boot Application with H2 Database
+  dl-creator-app:
+    build: .
+    container_name: dl-creator-app
+    restart: unless-stopped
+    ports:
+      - "7500:7500"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:h2:mem:dl_creator_db
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.h2.Driver
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_H2_CONSOLE_ENABLED=true
+      - SPRING_H2_CONSOLE_PATH=/h2-console
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.H2Dialect
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
+      - SPRING_JPA_SHOW_SQL=true
+      - SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL=true
+      - SPRING_JPA_OPEN_IN_VIEW=false
+      - SECURITY_JWT_SECRET_KEY=3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
+      - SECURITY_JWT_EXPIRATION_TIME=3600000
+      - SERVER_PORT=7500
+    networks:
+      - dl-creator-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:7500/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+networks:
+  dl-creator-network:
+    driver: bridge

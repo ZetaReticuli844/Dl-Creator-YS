@@ -1,0 +1,41 @@
+version: "3.1"
+
+rules:
+# Immediate responses for general intents
+- rule: Immediate help response
+  steps:
+  - intent: help
+  - action: utter_help
+
+- rule: Immediate thank response
+  steps:
+  - intent: thank
+  - action: utter_thank
+
+- rule: Immediate greeting response
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+- rule: Immediate goodbye response
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Immediate bot challenge response
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+# Fallback handling
+- rule: Handle NLU fallback
+  steps:
+  - intent: nlu_fallback
+  - action: action_fallback
+
+- rule: Handle out of scope requests
+  steps:
+  - intent: out_of_scope
+  - action: utter_out_of_scope
+
+

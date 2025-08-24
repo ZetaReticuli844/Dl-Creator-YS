@@ -1,0 +1,132 @@
+version: "3.1"
+
+stories:
+# License Status Check Flow
+- story: license status check flow
+  steps:
+  - intent: check_license_status
+  - action: action_check_license_status
+
+# License Status Check with Name Verification
+- story: license status check with name verification
+  steps:
+  - intent: check_license_status
+  - action: action_check_license_status
+
+# View License Information Flow
+- story: view license information flow
+  steps:
+  - intent: view_license_info
+  - action: action_view_license_info
+
+# License Renewal Flow
+- story: license renewal flow
+  steps:
+  - intent: renew_license
+  - action: action_renew_license
+
+# Duplicate License Request Flow
+- story: duplicate license request flow
+  steps:
+  - intent: request_duplicate
+  - action: action_request_duplicate
+
+# Add Vehicle Type Flow
+- story: add vehicle type flow
+  steps:
+  - intent: add_vehicle_type
+  - action: utter_ask_vehicle_type
+  - intent: provide_vehicle_type
+  - action: action_add_vehicle_type
+
+# Remove Vehicle Type Flow
+- story: remove vehicle type flow
+  steps:
+  - intent: remove_vehicle_type
+  - action: utter_ask_vehicle_type
+  - intent: provide_vehicle_type
+  - action: action_remove_vehicle_type
+
+# Change Address Flow
+- story: change address flow
+  steps:
+  - intent: change_address
+  - action: utter_ask_new_address
+  - intent: provide_address
+  - action: action_change_address
+
+# Update License Status Flow
+- story: update license status flow
+  steps:
+  - intent: update_license_status
+  - action: action_update_license_status
+
+# License Not Received Flow
+- story: license not received flow
+  steps:
+  - intent: license_not_received
+  - action: action_license_not_received
+
+# Change Contact Flow
+- story: change contact flow
+  steps:
+  - intent: change_contact
+  - action: utter_ask_new_contact
+  - intent: provide_contact
+  - action: action_change_contact
+
+# General Inquiry Flow
+- story: general inquiry flow
+  steps:
+  - intent: general_inquiry
+  - action: utter_help
+
+# Help Request Flow
+- story: help request flow
+  steps:
+  - intent: help
+  - action: utter_help
+
+# Thank You Flow
+- story: thank you flow
+  steps:
+  - intent: thank
+  - action: utter_thank
+
+# Bot Challenge Flow
+- story: bot challenge flow
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+# Greeting Flow
+- story: greeting flow
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+# Goodbye Flow
+- story: goodbye flow
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+# Fallback Flow
+- story: fallback flow
+  steps:
+  - intent: nlu_fallback
+  - action: action_fallback
+
+# Out of Scope Flow
+- story: out of scope flow
+  steps:
+  - intent: out_of_scope
+  - action: utter_out_of_scope
+
+# Complex License Status Check with Multiple Attempts
+- story: complex license status check with retries
+  steps:
+  - intent: check_license_status
+  - action: action_check_license_status
+
+

@@ -1,0 +1,126 @@
+version: '3.8'
+
+services:
+  # Frontend Application
+  dl-creator-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - backend
+      - rasa
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Backend API (example - you'll need to create this)
+  backend:
+    image: node:18-alpine
+    working_dir: /app
+    ports:
+      - "7500:7500"
+    environment:
+      - NODE_ENV=production
+      - PORT=7500
+    volumes:
+      - ./backend:/app
+    command: ["npm", "start"]
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7500/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Rasa Chatbot (example - you'll need to create this)
+  rasa:
+    image: rasa/rasa:3.6.0
+    ports:
+      - "5005:5005"
+    environment:
+      - RASA_TOKEN=${RASA_TOKEN:-}
+    volumes:
+      - ./rasa:/app
+    command: ["run", "--enable-api", "--cors", "*", "--port", "5005"]
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5005/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Database (example - you can use any database)
+  database:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=dl_creator
+      - POSTGRES_USER=dl_user
+      - POSTGRES_PASSWORD=dl_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dl_user -d dl_creator"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Redis (for session management and caching)
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Nginx Reverse Proxy (optional - for production)
+  nginx-proxy:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx-proxy.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - dl-creator-frontend
+      - backend
+      - rasa
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+    profiles:
+      - production
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  dl-creator-network:
+    driver: bridge

@@ -1,0 +1,502 @@
+version: "3.1"
+
+nlu:
+# Core license management intents
+- intent: check_license_status
+  examples: |
+    - What's my license status?
+    - Is my license still valid?
+    - Check if my license is expired
+    - Show me my license status
+    - How's my license doing?
+    - Is my driving license active?
+    - Check license validity
+    - License status check
+    - Am I still licensed to drive?
+    - Verify my license status
+    - Check my driving license
+    - License expiration status
+    - Is my license current?
+    - License validity check
+    - Driving license status
+
+- intent: view_license_info
+  examples: |
+    - What are my license details?
+    - Show my license information
+    - Display my license
+    - What's on my license?
+    - License details please
+    - Show license information
+    - View my driving license
+    - License particulars
+    - What does my license say?
+    - License details
+    - Driving license info
+    - License information
+    - Show me my license details
+    - License particulars
+    - View license details
+
+
+
+- intent: update_license_status
+  examples: |
+    - Update my license status
+    - Change license status
+    - Set license status to submitted
+    - Update status to pending
+    - Change status to printed
+    - Set status to dispatched
+    - Update to delivered status
+    - Change to cancelled status
+    - License status update
+    - Update application status
+    - Change application status
+    - Set application status
+    - Update license application status
+    - Change license application status
+    - Set license application status
+
+- intent: license_not_received
+  examples: |
+    - I have not received my license
+    - I haven't received my license
+    - My license hasn't arrived
+    - License not delivered
+    - Where is my license
+    - I didn't get my license
+    - License hasn't been delivered
+    - My driving license didn't arrive
+    - License delivery issue
+    - Haven't received my license yet
+    - License not in mail
+    - My license is missing
+    - License delivery problem
+    - I'm still waiting for my license
+    - License hasn't shown up
+
+- intent: renew_license
+  examples: |
+    - I need to renew my license
+    - My license expired
+    - License renewal
+    - Renew my driving license
+    - License expired
+    - Need to renew license
+    - Driving license renewal
+    - License renewal process
+    - Renew license
+    - Expired license renewal
+    - License renewal request
+    - Renew driving license
+    - License expired need renewal
+    - Renewal process
+    - License renewal
+
+- intent: request_duplicate
+  examples: |
+    - I lost my license
+    - Request duplicate license
+    - Lost my driving license
+    - Need duplicate license
+    - License lost
+    - Duplicate license request
+    - Lost license
+    - Need a new license copy
+    - Duplicate driving license
+    - License replacement
+    - Lost my license
+    - Duplicate license
+    - License copy request
+    - Replace lost license
+    - Duplicate driving license
+
+- intent: add_vehicle_type
+  examples: |
+    - Add motorcycle to my license
+    - Add vehicle type to license
+    - Add bus to driving license
+    - Add vehicle authorization
+    - Add new vehicle type
+    - Add motorcycle authorization
+    - Add truck authorization
+    - Add bus authorization
+    - Vehicle type addition
+    - Add vehicle to license
+    - Add driving authorization
+    - Add vehicle type
+    - Vehicle authorization addition
+    - Add vehicle to driving license
+
+- intent: remove_vehicle_type
+  examples: |
+    - Remove truck from my license
+    - Remove vehicle type
+    - Remove motorcycle from license
+    - Remove bus authorization
+    - Remove vehicle type from license
+    - Remove driving authorization
+    - Remove vehicle authorization
+    - Remove truck authorization
+    - Remove motorcycle authorization
+    - Vehicle type removal
+    - Remove vehicle from license
+    - Remove driving authorization
+    - Vehicle authorization removal
+    - Remove vehicle type
+    - Remove vehicle from driving license
+
+- intent: change_address
+  examples: |
+    - I moved to a new address
+    - Change my address on license
+    - Update address
+    - Change address
+    - Address change
+    - Update my address
+    - Change license address
+    - Address update
+    - New address
+    - Change my address
+    - Update address on license
+    - Address modification
+    - Change license address
+    - Address change request
+    - Update address information
+
+- intent: change_contact
+  examples: |
+    - Update my contact number
+    - Change contact information
+    - Update contact details
+    - Change phone number
+    - Update phone number
+    - Change contact number
+    - Contact information update
+    - Phone number change
+    - Update contact
+    - Change contact
+    - Contact update
+    - Phone number update
+    - Contact information change
+    - Update contact number
+    - Change contact details
+
+- intent: general_inquiry
+  examples: |
+    - How do I get a license?
+    - License requirements
+    - What do I need for a license?
+    - License application process
+    - How to apply for license?
+    - License requirements
+    - License application
+    - How to get driving license?
+    - License process
+    - License application requirements
+    - How to apply for driving license?
+    - License requirements
+    - License application process
+    - How to get license?
+    - License application
+
+
+
+- intent: provide_vehicle_type
+  examples: |
+    - I want to add [motorcycle](vehicle_type)
+    - Add [truck](vehicle_type) to my license
+    - [car](vehicle_type) authorization
+    - [bus](vehicle_type) license
+    - [motorcycle](vehicle_type) license
+    - [truck](vehicle_type) license
+    - [car](vehicle_type) license
+    - [bus](vehicle_type) authorization
+    - [motorcycle](vehicle_type) authorization
+    - [truck](vehicle_type) authorization
+    - [car](vehicle_type) authorization
+    - [bus](vehicle_type) license
+    - [motorcycle](vehicle_type) license
+    - [truck](vehicle_type) license
+    - [car](vehicle_type) license
+
+- intent: provide_address
+  examples: |
+    - My new address is [123 Main Street, New York, NY 10001](new_address)
+    - [456 Oak Avenue, Los Angeles, CA 90210](new_address)
+    - [789 Pine Road, Chicago, IL 60601](new_address)
+    - [321 Elm Street, Houston, TX 77001](new_address)
+    - [654 Maple Drive, Phoenix, AZ 85001](new_address)
+    - [987 Cedar Lane, Philadelphia, PA 19101](new_address)
+    - [147 Birch Court, San Antonio, TX 78201](new_address)
+    - [258 Spruce Way, San Diego, CA 92101](new_address)
+    - [369 Willow Place, Dallas, TX 75201](new_address)
+    - [741 Aspen Circle, San Jose, CA 95101](new_address)
+    - [123 Main Street](new_address)
+    - [456 Oak Avenue](new_address)
+    - [789 Pine Road](new_address)
+    - [321 Elm Street](new_address)
+    - [654 Maple Drive](new_address)
+    - [987 Cedar Lane](new_address)
+    - [147 Birch Court](new_address)
+    - [258 Spruce Way](new_address)
+    - [369 Willow Place](new_address)
+    - [741 Aspen Circle](new_address)
+    - [123 Main Street, New York](new_address)
+    - [456 Oak Avenue, Los Angeles](new_address)
+    - [789 Pine Road, Chicago](new_address)
+    - [321 Elm Street, Houston](new_address)
+    - [654 Maple Drive, Phoenix](new_address)
+    - [987 Cedar Lane, Philadelphia](new_address)
+    - [147 Birch Court, San Antonio](new_address)
+    - [258 Spruce Way, San Diego](new_address)
+    - [369 Willow Place, Dallas](new_address)
+    - [741 Aspen Circle, San Jose](new_address)
+    - [123 Main Street, New York, NY](new_address)
+    - [456 Oak Avenue, Los Angeles, CA](new_address)
+    - [789 Pine Road, Chicago, IL](new_address)
+    - [321 Elm Street, Houston, TX](new_address)
+    - [654 Maple Drive, Phoenix, AZ](new_address)
+    - [987 Cedar Lane, Philadelphia, PA](new_address)
+    - [147 Birch Court, San Antonio, TX](new_address)
+    - [258 Spruce Way, San Diego, CA](new_address)
+    - [369 Willow Place, Dallas, TX](new_address)
+    - [741 Aspen Circle, San Jose, CA](new_address)
+    - [123 Main Street, New York, NY 10001](new_address)
+    - [456 Oak Avenue, Los Angeles, CA 90210](new_address)
+    - [789 Pine Road, Chicago, IL 60601](new_address)
+    - [321 Elm Street, Houston, TX 77001](new_address)
+    - [654 Maple Drive, Phoenix, AZ 85001](new_address)
+    - [987 Cedar Lane, Philadelphia, PA 19101](new_address)
+    - [147 Birch Court, San Antonio, TX 78201](new_address)
+    - [258 Spruce Way, San Diego, CA 92101](new_address)
+    - [369 Willow Place, Dallas, TX 75201](new_address)
+    - [741 Aspen Circle, San Jose, CA 95101](new_address)
+    - 123 Main Street
+    - 456 Oak Avenue
+    - 789 Pine Road
+    - 321 Elm Street
+    - 654 Maple Drive
+    - 987 Cedar Lane
+    - 147 Birch Court
+    - 258 Spruce Way
+    - 369 Willow Place
+    - 741 Aspen Circle
+    - 123 Main Street, New York
+    - 456 Oak Avenue, Los Angeles
+    - 789 Pine Road, Chicago
+    - 321 Elm Street, Houston
+    - 654 Maple Drive, Phoenix
+    - 987 Cedar Lane, Philadelphia
+    - 147 Birch Court, San Antonio
+    - 258 Spruce Way, San Diego
+    - 369 Willow Place, Dallas
+    - 741 Aspen Circle, San Jose
+    - 123 Main Street, New York, NY
+    - 456 Oak Avenue, Los Angeles, CA
+    - 789 Pine Road, Chicago, IL
+    - 321 Elm Street, Houston, TX
+    - 654 Maple Drive, Phoenix, AZ
+    - 987 Cedar Lane, Philadelphia, PA
+    - 147 Birch Court, San Antonio, TX
+    - 258 Spruce Way, San Diego, CA
+    - 369 Willow Place, Dallas, TX
+    - 741 Aspen Circle, San Jose, CA
+    - 123 Main Street, New York, NY 10001
+    - 456 Oak Avenue, Los Angeles, CA 90210
+    - 789 Pine Road, Chicago, IL 60601
+    - 321 Elm Street, Houston, TX 77001
+    - 654 Maple Drive, Phoenix, AZ 85001
+    - 987 Cedar Lane, Philadelphia, PA 19101
+    - 147 Birch Court, San Antonio, TX 78201
+    - 258 Spruce Way, San Diego, CA 92101
+    - 369 Willow Place, Dallas, TX 75201
+    - 741 Aspen Circle, San Jose, CA 95101
+    - my address is 123 Main Street
+    - I live at 456 Oak Avenue
+    - my new address is 789 Pine Road
+    - please update my address to 321 Elm Street
+    - change my address to 654 Maple Drive
+    - I moved to 987 Cedar Lane
+    - my new place is at 147 Birch Court
+    - update address to 258 Spruce Way
+    - I'm now at 369 Willow Place
+    - my current address is 741 Aspen Circle
+
+- intent: provide_contact
+  examples: |
+    - My new contact is [555-123-4567](new_contact)
+    - [john.doe@email.com](new_contact)
+    - [555-987-6543](new_contact)
+    - [jane.smith@email.com](new_contact)
+    - [555-456-7890](new_contact)
+    - [mike.johnson@email.com](new_contact)
+    - [555-789-0123](new_contact)
+    - [sarah.wilson@email.com](new_contact)
+    - [555-321-6540](new_contact)
+    - [david.brown@email.com](new_contact)
+
+# General conversation intents
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - good afternoon
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+    - hi there
+    - hello there
+
+- intent: goodbye
+  examples: |
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+    - take care
+    - see you soon
+    - until next time
+    - farewell
+    - good bye
+
+- intent: affirm
+  examples: |
+    - yes
+    - y
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+    - that's right
+    - exactly
+    - sure
+    - absolutely
+    - definitely
+    - you're right
+    - that's correct
+    - affirmative
+    - ok
+
+- intent: deny
+  examples: |
+    - no
+    - n
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+    - negative
+    - not at all
+    - absolutely not
+    - definitely not
+    - that's not right
+    - incorrect
+    - wrong
+    - no thanks
+
+- intent: thank
+  examples: |
+    - thanks
+    - thank you
+    - thanks a lot
+    - thank you very much
+    - thanks so much
+    - appreciate it
+    - thanks a bunch
+    - thank you so much
+    - grateful
+    - thanks a million
+    - thank you kindly
+    - much appreciated
+    - thanks for your help
+    - thank you for that
+    - thanks for everything
+
+- intent: help
+  examples: |
+    - help
+    - I need help
+    - can you help me?
+    - help me
+    - I need assistance
+    - can you assist me?
+    - assistance needed
+    - help please
+    - I'm stuck
+    - what can you do?
+    - how can you help?
+    - show me what you can do
+    - help options
+    - available help
+    - what help is available?
+
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+    - is this a chatbot?
+    - are you real?
+    - are you artificial?
+    - are you automated?
+    - is this automated?
+    - are you a computer?
+    - are you AI?
+    - are you artificial intelligence?
+    - is this a robot?
+    - are you a robot?
+    - are you automated?
+
+# Fallback and error handling
+- intent: nlu_fallback
+  examples: |
+    - asdfasdfasdf
+    - qwertyuiop
+    - zxcvbnm
+    - 1234567890
+    - !@#$%^&*()
+    - random text
+    - gibberish
+    - nonsense
+    - invalid input
+    - not a real sentence
+    - random characters
+    - meaningless text
+    - invalid query
+    - random words
+    - nonsensical input
+
+- intent: out_of_scope
+  examples: |
+    - what's the weather like?
+    - tell me a joke
+    - what time is it?
+    - how old are you?
+    - what's your favorite color?
+    - can you sing?
+    - what's the capital of France?
+    - how many planets are there?
+    - what's 2+2?
+    - tell me about history
+    - what's the meaning of life?
+    - can you dance?
+    - what's your name?
+    - where are you from?
+    - what do you look like?

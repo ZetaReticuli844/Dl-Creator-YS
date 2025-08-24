@@ -1,0 +1,67 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007bff;
+    color: white;
+    padding: 15px 50px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .navbar-logo {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .navbar-menu {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .navbar-item {
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+  
+  .navbar-item:hover,
+  .navbar-item.active {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .navbar-user-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .navbar-username {
+    font-weight: bold;
+  }
+  
+  .navbar-logout-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .navbar-auth-links {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .register-btn {
+    background-color: #28a745;
+    border-radius: 4px;
+  }

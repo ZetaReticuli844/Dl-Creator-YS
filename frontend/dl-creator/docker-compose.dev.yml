@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  # Frontend Application (Development)
+  dl-creator-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://localhost:7500
+      - VITE_RASA_URL=http://localhost:5005
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+
+  # Backend API (Development)
+  backend:
+    image: node:18-alpine
+    working_dir: /app
+    ports:
+      - "7500:7500"
+    environment:
+      - NODE_ENV=development
+      - PORT=7500
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    command: ["npm", "run", "dev"]
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+
+  # Rasa Chatbot (Development)
+  rasa:
+    image: rasa/rasa:3.6.0
+    ports:
+      - "5005:5005"
+    environment:
+      - RASA_TOKEN=${RASA_TOKEN:-}
+    volumes:
+      - ./rasa:/app
+    command: ["run", "--enable-api", "--cors", "*", "--port", "5005", "--debug"]
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+
+  # Database (Development)
+  database:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=dl_creator_dev
+      - POSTGRES_USER=dl_user
+      - POSTGRES_PASSWORD=dl_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+
+  # Redis (Development)
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_dev_data:/data
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+
+volumes:
+  postgres_dev_data:
+  redis_dev_data:
+
+networks:
+  dl-creator-network:
+    driver: bridge

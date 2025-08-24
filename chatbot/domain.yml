@@ -1,0 +1,140 @@
+version: "3.1"
+
+intents:
+  # Core license management intents
+  - check_license_status
+  - view_license_info
+
+  - update_license_status
+  - license_not_received
+  - renew_license
+  - request_duplicate
+  - add_vehicle_type
+  - remove_vehicle_type
+  - change_address
+  - change_contact
+  - general_inquiry
+  
+  # Input intents
+  - provide_vehicle_type
+  - provide_address
+  - provide_contact
+  
+  # General conversation intents
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - thank
+  - help
+  - bot_challenge
+  
+  # Fallback and error handling
+  - nlu_fallback
+  - out_of_scope
+
+entities:
+  - vehicle_type
+  - new_address
+  - new_contact
+  - new_status
+
+slots:
+  vehicle_type:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: vehicle_type
+    - type: from_text
+      intent: provide_vehicle_type
+  
+  new_address:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: new_address
+    - type: from_text
+      intent: provide_address
+  
+  new_contact:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: new_contact
+    - type: from_text
+      intent: provide_contact
+  
+
+  
+  new_status:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: new_status
+    - type: from_text
+      intent: update_license_status
+  
+
+
+responses:
+  # Greeting responses
+  utter_greet:
+    - text: "🚗 Welcome to the Driving License Management System! I'm here to help you with all your license-related needs. How can I assist you today?"
+  
+
+  
+  # Update responses
+  utter_ask_vehicle_type:
+    - text: "What type of vehicle would you like to add to your license? (e.g., car, motorcycle, truck, bus)"
+  
+  utter_ask_new_address:
+    - text: "Please provide your new address. Include street, city, state, and postal code."
+  
+  utter_ask_new_contact:
+    - text: "Please provide your new contact information (phone number or email)."
+  
+
+  
+  # Renewal responses
+  utter_renewal_initiated:
+    - text: "🔄 Your license renewal has been initiated! You'll receive a confirmation email with payment instructions. The new license will be mailed to your registered address."
+  
+  # Duplicate license responses
+  utter_duplicate_requested:
+    - text: "📋 Your duplicate license request has been submitted. You'll receive a confirmation email with tracking information. The duplicate license will be mailed within 3-5 business days."
+  
+  # General responses
+  utter_help:
+    - text: "🤝 I can help you with:\n\n✅ Check license status\n📋 View license information\n🔄 Update license status\n📬 Report license not received\n🔄 Renew your license\n📋 Request duplicate license\n🚗 Add/remove vehicle types\n📍 Update address\n📞 Update contact information\n\nWhat would you like to do?"
+  
+  utter_goodbye:
+    - text: "👋 Thank you for using the Driving License Management System! Drive safely and have a great day!"
+  
+  utter_thank:
+    - text: "You're welcome! Is there anything else I can help you with?"
+  
+  utter_iamabot:
+    - text: "🤖 I am an AI assistant, powered by Rasa, designed to help you with driving license management. I can assist with checking status, viewing information, and processing updates."
+  
+  utter_fallback:
+    - text: "I'm not sure I understood that. Could you please rephrase or ask for help to see what I can assist you with?"
+  
+  utter_out_of_scope:
+    - text: "I'm sorry, but I can only help with driving license-related inquiries. For other matters, please contact our general support team at 1-800-SUPPORT."
+
+actions:
+  - action_check_license_status
+  - action_view_license_info
+  - action_update_license_status
+  - action_license_not_received
+  - action_renew_license
+  - action_request_duplicate
+  - action_add_vehicle_type
+  - action_remove_vehicle_type
+  - action_change_address
+  - action_change_contact
+  - action_fallback
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

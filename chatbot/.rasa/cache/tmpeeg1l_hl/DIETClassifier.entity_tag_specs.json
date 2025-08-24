@@ -1,0 +1,52 @@
+[
+  {
+    "tag_name": "entity",
+    "ids_to_tags": {
+      "1": "B-full_name",
+      "2": "I-full_name",
+      "3": "L-full_name",
+      "4": "U-full_name",
+      "5": "B-license_number",
+      "6": "I-license_number",
+      "7": "L-license_number",
+      "8": "U-license_number",
+      "9": "B-new_address",
+      "10": "I-new_address",
+      "11": "L-new_address",
+      "12": "U-new_address",
+      "13": "B-new_contact",
+      "14": "I-new_contact",
+      "15": "L-new_contact",
+      "16": "U-new_contact",
+      "17": "B-vehicle_type",
+      "18": "I-vehicle_type",
+      "19": "L-vehicle_type",
+      "20": "U-vehicle_type",
+      "0": "O"
+    },
+    "tags_to_ids": {
+      "B-full_name": 1,
+      "I-full_name": 2,
+      "L-full_name": 3,
+      "U-full_name": 4,
+      "B-license_number": 5,
+      "I-license_number": 6,
+      "L-license_number": 7,
+      "U-license_number": 8,
+      "B-new_address": 9,
+      "I-new_address": 10,
+      "L-new_address": 11,
+      "U-new_address": 12,
+      "B-new_contact": 13,
+      "I-new_contact": 14,
+      "L-new_contact": 15,
+      "U-new_contact": 16,
+      "B-vehicle_type": 17,
+      "I-vehicle_type": 18,
+      "L-vehicle_type": 19,
+      "U-vehicle_type": 20,
+      "O": 0
+    },
+    "num_tags": 21
+  }
+]

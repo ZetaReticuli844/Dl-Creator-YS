@@ -1,0 +1,102 @@
+version: '3.8'
+
+services:
+  # Frontend React Application (Development)
+  frontend-dev:
+    build:
+      context: ./frontend/dl-creator
+      dockerfile: Dockerfile.dev
+    container_name: dl-creator-frontend-dev
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_API_URL=http://localhost:7500
+      - REACT_APP_RASA_URL=http://localhost:5005
+    volumes:
+      - ./frontend/dl-creator:/app
+      - /app/node_modules
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+    command: npm run dev
+
+  # Backend Spring Boot Application (Development)
+  backend-dev:
+    build:
+      context: ./backend/dl_creator
+      dockerfile: Dockerfile
+    container_name: dl-creator-backend-dev
+    ports:
+      - "7500:7500"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:h2:mem:dl_creator_db
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.h2.Driver
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_H2_CONSOLE_ENABLED=true
+      - SPRING_H2_CONSOLE_PATH=/h2-console
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.H2Dialect
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
+      - SPRING_JPA_SHOW_SQL=true
+      - SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL=true
+      - SPRING_JPA_OPEN_IN_VIEW=false
+      - SECURITY_JWT_SECRET_KEY=3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
+      - SECURITY_JWT_EXPIRATION_TIME=3600000
+      - SERVER_PORT=7500
+      - SPRING_DEVTOOLS_RESTART_ENABLED=true
+    volumes:
+      - ./backend/dl_creator:/app
+      - /app/target
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+    command: ./mvnw spring-boot:run
+
+  # Rasa Action Server (Development)
+  action-server-dev:
+    build:
+      context: ./chatbot
+      dockerfile: Dockerfile
+    container_name: dl-creator-action-server-dev
+    ports:
+      - "5055:5055"
+    volumes:
+      - ./chatbot/actions:/app/actions
+      - ./chatbot/domain.yml:/app/domain.yml
+      - ./chatbot/config.yml:/app/config.yml
+    environment:
+      - RASA_SERVER_URL=http://rasa-server-dev:5005
+      - RASA_TOKEN=${RASA_TOKEN:-}
+    command: rasa run actions --port 5055 --cors "*" --debug
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+
+  # Rasa Server (Development)
+  rasa-server-dev:
+    build:
+      context: ./chatbot
+      dockerfile: Dockerfile
+    container_name: dl-creator-rasa-server-dev
+    ports:
+      - "5005:5005"
+    volumes:
+      - ./chatbot/models:/app/models
+      - ./chatbot/data:/app/data
+      - ./chatbot/config.yml:/app/config.yml
+      - ./chatbot/domain.yml:/app/domain.yml
+      - ./chatbot/endpoints.yml:/app/endpoints.yml
+    environment:
+      - RASA_TOKEN=${RASA_TOKEN:-}
+      - RASA_ACTIONS_URL=http://action-server-dev:5055/webhook
+    depends_on:
+      - action-server-dev
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+    command: rasa run --port 5005 --cors "*" --enable-api --debug
+
+networks:
+  dl-creator-network:
+    driver: bridge

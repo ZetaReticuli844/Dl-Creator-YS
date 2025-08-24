@@ -1,0 +1,267 @@
+version: "3.1"
+
+stories:
+# Test License Status Check Flow
+- story: test license status check flow
+  steps:
+  - user: |
+      What's my license status?
+    intent: check_license_status
+  - action: utter_ask_license_number
+  - user: |
+      My license number is ABC123456
+    intent: provide_license_number
+    entities:
+    - license_number: ABC123456
+  - action: action_validate_license
+  - user: |
+      My name is John Smith
+    intent: provide_name
+    entities:
+    - full_name: John Smith
+  - action: action_authenticate_user
+  - action: action_check_license_status
+
+# Test License Information View Flow
+- story: test view license information flow
+  steps:
+  - user: |
+      Show my license information
+    intent: view_license_info
+  - action: utter_ask_license_number
+  - user: |
+      ABC123456
+    intent: provide_license_number
+    entities:
+    - license_number: ABC123456
+  - action: action_validate_license
+  - user: |
+      John Smith
+    intent: provide_name
+    entities:
+    - full_name: John Smith
+  - action: action_authenticate_user
+  - action: action_view_license_info
+
+# Test License Renewal Flow
+- story: test license renewal flow
+  steps:
+  - user: |
+      I need to renew my license
+    intent: renew_license
+  - action: utter_ask_license_number
+  - user: |
+      ABC123456
+    intent: provide_license_number
+    entities:
+    - license_number: ABC123456
+  - action: action_validate_license
+  - user: |
+      John Smith
+    intent: provide_name
+    entities:
+    - full_name: John Smith
+  - action: action_authenticate_user
+  - action: utter_ask_renewal_type
+  - user: |
+      Standard renewal
+    intent: affirm
+  - action: action_renew_license
+
+# Test Duplicate License Request Flow
+- story: test duplicate license request flow
+  steps:
+  - user: |
+      I lost my license
+    intent: request_duplicate
+  - action: utter_ask_license_number
+  - user: |
+      ABC123456
+    intent: provide_license_number
+    entities:
+    - license_number: ABC123456
+  - action: action_validate_license
+  - user: |
+      John Smith
+    intent: provide_name
+    entities:
+    - full_name: John Smith
+  - action: action_authenticate_user
+  - action: action_request_duplicate
+
+# Test Add Vehicle Type Flow
+- story: test add vehicle type flow
+  steps:
+  - user: |
+      Add motorcycle to my license
+    intent: add_vehicle_type
+  - action: utter_ask_license_number
+  - user: |
+      ABC123456
+    intent: provide_license_number
+    entities:
+    - license_number: ABC123456
+  - action: action_validate_license
+  - user: |
+      John Smith
+    intent: provide_name
+    entities:
+    - full_name: John Smith
+  - action: action_authenticate_user
+  - action: utter_ask_vehicle_type
+  - user: |
+      motorcycle
+    intent: provide_vehicle_type
+    entities:
+    - vehicle_type: motorcycle
+  - action: action_add_vehicle_type
+
+# Test Change Address Flow
+- story: test change address flow
+  steps:
+  - user: |
+      I moved to a new address
+    intent: change_address
+  - action: utter_ask_license_number
+  - user: |
+      ABC123456
+    intent: provide_license_number
+    entities:
+    - license_number: ABC123456
+  - action: action_validate_license
+  - user: |
+      John Smith
+    intent: provide_name
+    entities:
+    - full_name: John Smith
+  - action: action_authenticate_user
+  - action: utter_ask_new_address
+  - user: |
+      456 New Street, New York, NY 10002
+    intent: provide_address
+    entities:
+    - new_address: 456 New Street, New York, NY 10002
+  - action: action_change_address
+
+# Test General Help Flow
+- story: test general help flow
+  steps:
+  - user: |
+      help
+    intent: help
+  - action: utter_help
+
+# Test Greeting Flow
+- story: test greeting flow
+  steps:
+  - user: |
+      hello
+    intent: greet
+  - action: utter_greet
+
+# Test Goodbye Flow
+- story: test goodbye flow
+  steps:
+  - user: |
+      bye
+    intent: goodbye
+  - action: utter_goodbye
+
+# Test Bot Challenge Flow
+- story: test bot challenge flow
+  steps:
+  - user: |
+      are you a bot?
+    intent: bot_challenge
+  - action: utter_iamabot
+
+# Test Thank You Flow
+- story: test thank you flow
+  steps:
+  - user: |
+      thank you
+    intent: thank
+  - action: utter_thank
+
+# Test Fallback Flow
+- story: test fallback flow
+  steps:
+  - user: |
+      asdfasdfasdf
+    intent: nlu_fallback
+  - action: action_fallback
+
+# Test Out of Scope Flow
+- story: test out of scope flow
+  steps:
+  - user: |
+      what's the weather like?
+    intent: out_of_scope
+  - action: utter_out_of_scope
+
+# Test Invalid License Number
+- story: test invalid license number
+  steps:
+  - user: |
+      Check my license status
+    intent: check_license_status
+  - action: utter_ask_license_number
+  - user: |
+      INVALID123
+    intent: provide_license_number
+    entities:
+    - license_number: INVALID123
+  - action: action_validate_license
+
+# Test Authentication Failure
+- story: test authentication failure
+  steps:
+  - user: |
+      Check my license status
+    intent: check_license_status
+  - action: utter_ask_license_number
+  - user: |
+      ABC123456
+    intent: provide_license_number
+    entities:
+    - license_number: ABC123456
+  - action: action_validate_license
+  - user: |
+      Wrong Name
+    intent: provide_name
+    entities:
+    - full_name: Wrong Name
+  - action: action_authenticate_user
+
+# Test Complex Conversation Flow
+- story: test complex conversation flow
+  steps:
+  - user: |
+      hello
+    intent: greet
+  - action: utter_greet
+  - user: |
+      I need to check my license status
+    intent: check_license_status
+  - action: utter_ask_license_number
+  - user: |
+      ABC123456
+    intent: provide_license_number
+    entities:
+    - license_number: ABC123456
+  - action: action_validate_license
+  - user: |
+      John Smith
+    intent: provide_name
+    entities:
+    - full_name: John Smith
+  - action: action_authenticate_user
+  - action: action_check_license_status
+  - user: |
+      thank you
+    intent: thank
+  - action: utter_thank
+  - user: |
+      goodbye
+    intent: goodbye
+  - action: utter_goodbye
