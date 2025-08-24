@@ -48,18 +48,14 @@ Before running this project, make sure you have:
 
 ### Option 1: Traditional Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd dl-creator
-   ```
 
-2. **Install dependencies**
+
+1. **Install dependencies**
    ```bash
    npm install
    ```
 
-3. **Environment Configuration**
+2. **Environment Configuration**
    Create a `.env` file in the project root:
    ```bash
    # Rasa Chatbot URL
@@ -69,12 +65,12 @@ Before running this project, make sure you have:
    VITE_API_URL=http://localhost:7500
    ```
 
-4. **Start the development server**
+3. **Start the development server**
    ```bash
    npm run dev
    ```
 
-5. **Open your browser**
+4. **Open your browser**
    Navigate to `http://localhost:5173` (or the URL shown in your terminal)
 
 ### Option 2: Docker Deployment (Recommended)

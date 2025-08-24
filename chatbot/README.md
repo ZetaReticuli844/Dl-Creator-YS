@@ -44,34 +44,30 @@ A comprehensive AI-powered chatbot built with Rasa for managing driving license 
 
 ## 🚀 **Installation & Setup**
 
-### **1. Clone the Repository**
-```bash
-git clone <repository-url>
-cd chatbot
-```
 
-### **2. Create Virtual Environment**
+
+### **1. Create Virtual Environment**
 ```bash
 python -m venv rasa_env
 source rasa_env/bin/activate  # On Windows: rasa_env\Scripts\activate
 ```
 
-### **3. Install Dependencies**
+### **2. Install Dependencies**
 ```bash
 pip install -r requirements.txt
 ```
 
-### **4. Train the Model**
+### **3. Train the Model**
 ```bash
 rasa train
 ```
 
-### **5. Start the Action Server**
+### **4. Start the Action Server**
 ```bash
 rasa run actions
 ```
 
-### **6. Start the Rasa Server**
+### **5. Start the Rasa Server**
 ```bash
 rasa run
 ```
