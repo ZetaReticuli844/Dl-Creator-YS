@@ -1,0 +1,153 @@
+services:
+  # Frontend React Application
+  frontend:
+    image: ${DOCKER_USERNAME:-your-username}/dl-creator-frontend:${VERSION:-latest}
+    container_name: dl-creator-frontend
+    ports:
+      - "3000:80"
+    environment:
+      - NODE_ENV=production
+      - REACT_APP_API_URL=http://backend:7500
+      - REACT_APP_RASA_URL=http://rasa-server:5005
+    depends_on:
+      - backend
+      - rasa-server
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Backend Spring Boot Application
+  backend:
+    image: ${DOCKER_USERNAME:-your-username}/dl-creator-backend:${VERSION:-latest}
+    container_name: dl-creator-backend
+    ports:
+      - "7500:7500"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:h2:mem:dl_creator_db
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.h2.Driver
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_H2_CONSOLE_ENABLED=true
+      - SPRING_H2_CONSOLE_PATH=/h2-console
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.H2Dialect
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
+      - SPRING_JPA_SHOW_SQL=true
+      - SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL=true
+      - SPRING_JPA_OPEN_IN_VIEW=false
+      - SECURITY_JWT_SECRET_KEY=3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
+      - SECURITY_JWT_EXPIRATION_TIME=3600000
+      - SERVER_PORT=7500
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:7500/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # Rasa Action Server
+  action-server:
+    image: ${DOCKER_USERNAME:-your-username}/dl-creator-chatbot:${VERSION:-latest}
+    container_name: dl-creator-action-server
+    ports:
+      - "5055:5055"
+    volumes:
+      - ./chatbot/actions:/app/actions
+      - ./chatbot/domain.yml:/app/domain.yml
+      - ./chatbot/config.yml:/app/config.yml
+    environment:
+      - RASA_SERVER_URL=http://rasa-server:5005
+      - RASA_TOKEN=${RASA_TOKEN:-}
+    command: rasa run actions --port 5055 --cors "*" --enable-api
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+
+  # Rasa Server
+  rasa-server:
+    image: ${DOCKER_USERNAME:-your-username}/dl-creator-chatbot:${VERSION:-latest}
+    container_name: dl-creator-rasa-server
+    ports:
+      - "5005:5005"
+    volumes:
+      - ./chatbot/models:/app/models
+      - ./chatbot/data:/app/data
+      - ./chatbot/config.yml:/app/config.yml
+      - ./chatbot/domain.yml:/app/domain.yml
+      - ./chatbot/endpoints.yml:/app/endpoints.yml
+    environment:
+      - RASA_TOKEN=${RASA_TOKEN:-}
+      - RASA_ACTIONS_URL=http://action-server:5055/webhook
+    depends_on:
+      - action-server
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+    command: rasa run --port 5005 --cors "*" --enable-api --enable-cors
+
+  # PostgreSQL Database (for production use)
+  postgres:
+    image: postgres:15-alpine
+    container_name: dl-creator-postgres
+    environment:
+      POSTGRES_DB: dl_creator
+      POSTGRES_USER: ${POSTGRES_USER:-dl_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-dl_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+    profiles:
+      - production
+
+  # Redis (for session storage and caching)
+  redis:
+    image: redis:7-alpine
+    container_name: dl-creator-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+    profiles:
+      - production
+
+  # Nginx Reverse Proxy (for production)
+  nginx:
+    image: nginx:alpine
+    container_name: dl-creator-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - frontend
+      - backend
+      - rasa-server
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+    profiles:
+      - production
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  dl-creator-network:
+    driver: bridge

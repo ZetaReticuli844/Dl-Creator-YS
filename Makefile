@@ -120,3 +120,26 @@ health:
 	@curl -f http://localhost:7500/actuator/health > /dev/null 2>&1 && echo "Backend: OK" || echo "Backend: FAILED"
 	@curl -f http://localhost:5005/status > /dev/null 2>&1 && echo "Rasa Server: OK" || echo "Rasa Server: FAILED"
 	@curl -f http://localhost:5055 > /dev/null 2>&1 && echo "Rasa Actions: OK" || echo "Rasa Actions: FAILED"
+
+# Docker Hub Commands
+hub-login:
+	@echo "Logging in to Docker Hub..."
+	docker login
+
+hub-push:
+	@echo "Building and pushing to Docker Hub..."
+	@chmod +x docker-hub-push.sh
+	./docker-hub-push.sh
+
+hub-push-version:
+	@echo "Building and pushing versioned images to Docker Hub..."
+	@chmod +x docker-hub-push.sh
+	./docker-hub-push.sh --version $(VERSION)
+
+hub-run:
+	@echo "Running from Docker Hub images..."
+	docker-compose -f docker-compose.hub.yml up -d
+
+hub-run-version:
+	@echo "Running specific version from Docker Hub..."
+	DOCKER_USERNAME=$(DOCKER_USERNAME) VERSION=$(VERSION) docker-compose -f docker-compose.hub.yml up -d
