@@ -14,7 +14,7 @@ services:
     environment:
       - RASA_SERVER_URL=http://rasa-server:5005
       - RASA_TOKEN=${RASA_TOKEN:-}
-    command: rasa run actions --port 5055 --cors "*"
+    command: rasa run actions --port 5055 --cors "*" --enable-api
     networks:
       - chatbot-network
     restart: unless-stopped
@@ -39,7 +39,7 @@ services:
     networks:
       - chatbot-network
     restart: unless-stopped
-    command: rasa run --port 5005 --cors "*" --enable-api
+    command: rasa run --port 5005 --cors "*" --enable-api --enable-cors
 
   # PostgreSQL Database (for future database integration)
   postgres:
