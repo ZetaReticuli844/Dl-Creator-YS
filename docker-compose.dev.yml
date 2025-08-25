@@ -66,6 +66,7 @@ services:
     environment:
       - RASA_SERVER_URL=http://rasa-server-dev:5005
       - RASA_TOKEN=${RASA_TOKEN:-}
+      - API_BASE_URL=http://backend-dev:7500
     command: rasa run actions --port 5055 --cors "*" --enable-api --debug
     networks:
       - dl-creator-network
@@ -88,6 +89,7 @@ services:
     environment:
       - RASA_TOKEN=${RASA_TOKEN:-}
       - RASA_ACTIONS_URL=http://action-server-dev:5055/webhook
+      - API_BASE_URL=http://backend-dev:7500
     depends_on:
       - action-server-dev
     networks:

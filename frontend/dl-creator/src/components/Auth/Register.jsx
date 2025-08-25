@@ -57,7 +57,7 @@ const Register = () => {
           )}
           
           <div className="form-group">
-            <label htmlFor="fullName">Full Name</label>
+            <label htmlFor="fullName">User Name</label>
             <input
               type="text"
               id="fullName"

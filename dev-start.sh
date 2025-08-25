@@ -190,12 +190,14 @@ start_rasa() {
     
     # Start action server
     print_status "Starting Rasa Action Server..."
+    export API_BASE_URL=http://localhost:7500
     nohup rasa run actions --port 5055 --cors "*" --enable-api > ../logs/rasa-actions.log 2>&1 &
     RASA_ACTIONS_PID=$!
     echo $RASA_ACTIONS_PID > ../logs/rasa-actions.pid
     
     # Start Rasa server
     print_status "Starting Rasa Server..."
+    export API_BASE_URL=http://localhost:7500
     nohup rasa run --port 5005 --cors "*" --enable-api --enable-cors > ../logs/rasa-server.log 2>&1 &
     RASA_SERVER_PID=$!
     echo $RASA_SERVER_PID > ../logs/rasa-server.pid
