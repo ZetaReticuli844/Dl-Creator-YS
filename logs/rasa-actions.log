@@ -1,6 +1,68 @@
 /Users/yogeshshekhawat/assignment/chatbot/rasa_env/lib/python3.10/site-packages/rasa/core/tracker_store.py:1044: MovedIn20Warning: Deprecated API features detected! These feature(s) are not compatible with SQLAlchemy 2.0. To prevent incompatible upgrades prior to updating applications, ensure requirements files are pinned to "sqlalchemy<2.0". Set environment variable SQLALCHEMY_WARN_20=1 to show all deprecation warnings.  Set environment variable SQLALCHEMY_SILENCE_UBER_WARNING=1 to silence this message. (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
   Base: DeclarativeMeta = declarative_base()
-usage: rasa [-h] [--version]
-            {init,run,shell,train,interactive,telemetry,test,visualize,data,export,x,evaluate}
-            ...
-rasa: error: unrecognized arguments: --enable-api
+/Users/yogeshshekhawat/assignment/chatbot/rasa_env/lib/python3.10/site-packages/rasa/shared/utils/validation.py:134: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+  import pkg_resources
+/Users/yogeshshekhawat/assignment/chatbot/rasa_env/lib/python3.10/site-packages/pkg_resources/__init__.py:3117: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('mpl_toolkits')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+  declare_namespace(pkg)
+/Users/yogeshshekhawat/assignment/chatbot/rasa_env/lib/python3.10/site-packages/pkg_resources/__init__.py:3117: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('ruamel')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+  declare_namespace(pkg)
+/Users/yogeshshekhawat/assignment/chatbot/rasa_env/lib/python3.10/site-packages/sanic_cors/extension.py:39: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  SANIC_VERSION = LooseVersion(sanic_version)
+2025-08-26 05:35:00 INFO     rasa_sdk.endpoint  - Starting action endpoint server...
+2025-08-26 05:35:00 INFO     rasa_sdk.executor  - Registered function for 'action_session_started'.
+2025-08-26 05:35:00 INFO     rasa_sdk.executor  - Registered function for 'action_reset_authentication'.
+2025-08-26 05:35:00 INFO     rasa_sdk.executor  - Registered function for 'action_validate_license'.
+2025-08-26 05:35:00 INFO     rasa_sdk.executor  - Registered function for 'action_authenticate_user'.
+2025-08-26 05:35:00 INFO     rasa_sdk.executor  - Registered function for 'action_check_license_status'.
+2025-08-26 05:35:00 INFO     rasa_sdk.executor  - Registered function for 'action_view_license_info'.
+2025-08-26 05:35:00 INFO     rasa_sdk.executor  - Registered function for 'action_renew_license'.
+2025-08-26 05:35:00 INFO     rasa_sdk.executor  - Registered function for 'action_request_duplicate'.
+2025-08-26 05:35:00 INFO     rasa_sdk.executor  - Registered function for 'action_add_vehicle_type'.
+2025-08-26 05:35:00 INFO     rasa_sdk.executor  - Registered function for 'action_remove_vehicle_type'.
+2025-08-26 05:35:00 INFO     rasa_sdk.executor  - Registered function for 'action_change_address'.
+2025-08-26 05:35:00 INFO     rasa_sdk.executor  - Registered function for 'action_change_contact'.
+2025-08-26 05:35:00 INFO     rasa_sdk.executor  - Registered function for 'action_update_license_status'.
+2025-08-26 05:35:00 INFO     rasa_sdk.executor  - Registered function for 'action_license_not_received'.
+2025-08-26 05:35:00 INFO     rasa_sdk.executor  - Registered function for 'action_fallback'.
+2025-08-26 05:35:00 INFO     rasa_sdk.endpoint  - Starting plugins...
+2025-08-26 05:35:00 INFO     rasa_sdk.endpoint  - Action endpoint is up and running on http://0.0.0.0:5055
+2025-08-26 05:35:04 ERROR    rasa_sdk.endpoint  - Exception occurred during execution of request <Request: GET />
+Traceback (most recent call last):
+  File "/Users/yogeshshekhawat/assignment/chatbot/rasa_env/lib/python3.10/site-packages/sanic_routing/router.py", line 79, in resolve
+    route, param_basket = self.find_route(
+  File "", line 9, in find_route
+sanic_routing.exceptions.NotFound: Not Found
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yogeshshekhawat/assignment/chatbot/rasa_env/lib/python3.10/site-packages/sanic_routing/router.py", line 79, in resolve
+    route, param_basket = self.find_route(
+  File "", line 9, in find_route
+sanic_routing.exceptions.NotFound: Not Found
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yogeshshekhawat/assignment/chatbot/rasa_env/lib/python3.10/site-packages/sanic/router.py", line 38, in _get
+    return self.resolve(
+  File "/Users/yogeshshekhawat/assignment/chatbot/rasa_env/lib/python3.10/site-packages/sanic_routing/router.py", line 90, in resolve
+    return self.resolve(
+  File "/Users/yogeshshekhawat/assignment/chatbot/rasa_env/lib/python3.10/site-packages/sanic_routing/router.py", line 96, in resolve
+    raise self.exception(str(e), path=path)
+sanic_routing.exceptions.NotFound: Not Found
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "handle_request", line 26, in handle_request
+    from socket import socket
+  File "/Users/yogeshshekhawat/assignment/chatbot/rasa_env/lib/python3.10/site-packages/sanic/router.py", line 66, in get
+    return self._get(path, method, host)
+  File "/Users/yogeshshekhawat/assignment/chatbot/rasa_env/lib/python3.10/site-packages/sanic/router.py", line 44, in _get
+    raise NotFound("Requested URL {} not found".format(e.path))
+sanic.exceptions.NotFound: Requested URL  not found
+{'success': True, 'message': 'Driving license retrieved successfully', 'data': {'id': 1, 'userId': 1, 'licenseNumber': 'DL-1-1756166879834399785', 'issueDate': '2025-08-26T00:07:59.836+00:00', 'expirationDate': '2025-08-26T00:07:59.836+00:00', 'firstName': 'James', 'lastName': 'Cordon', 'vehicleType': 'Car', 'vehicleMake': 'BMW', 'address': 'f234 South City 324352', 'licenseStatus': None}}
+{'success': True, 'message': 'Driving license retrieved successfully', 'data': {'id': 1, 'userId': 1, 'licenseNumber': 'DL-1-1756166879834399785', 'issueDate': '2025-08-26T00:08:48.516+00:00', 'expirationDate': '2025-09-12T00:49:17.447+00:00', 'firstName': 'James', 'lastName': 'Cordon', 'vehicleType': 'Car', 'vehicleMake': 'BMW', 'address': 'f234 South City 324352', 'licenseStatus': None}}
