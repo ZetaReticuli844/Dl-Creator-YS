@@ -91,6 +91,12 @@ if ! command_exists pip3; then
     exit 1
 fi
 
+# Check for Docker
+if ! command_exists docker; then
+    print_error "Docker is not installed. Please install Docker."
+    exit 1
+fi
+
 print_success "All prerequisites are satisfied!"
 
 # Check if ports are available
@@ -116,10 +122,56 @@ if port_in_use 5055; then
     exit 1
 fi
 
+if port_in_use 16686; then
+    print_error "Port 16686 is already in use. Please free up the port."
+    exit 1
+fi
+
+if port_in_use 14250; then
+    print_error "Port 14250 is already in use. Please free up the port."
+    exit 1
+fi
+
+if port_in_use 4317; then
+    print_error "Port 4317 is already in use. Please free up the port."
+    exit 1
+fi
+
 print_success "All required ports are available!"
 
 # Create logs directory
 mkdir -p logs
+
+# Function to start Jaeger
+start_jaeger() {
+    print_status "Starting Jaeger All-in-One..."
+    
+    # Check if Jaeger container is already running
+    if docker ps -q -f name=dl-creator-jaeger | grep -q .; then
+        print_warning "Jaeger container is already running, stopping it first..."
+        docker stop dl-creator-jaeger >/dev/null 2>&1
+        docker rm dl-creator-jaeger >/dev/null 2>&1
+    fi
+    
+    # Start Jaeger container
+    docker run -d \
+        --name dl-creator-jaeger \
+        -p 16686:16686 \
+        -p 14250:14250 \
+        -p 14268:14268 \
+        -p 4317:4317 \
+        -p 4318:4318 \
+        -e COLLECTOR_OTLP_ENABLED=true \
+        jaegertracing/all-in-one:latest > logs/jaeger.log 2>&1
+    
+    if [ $? -eq 0 ]; then
+        print_success "Jaeger started successfully"
+        echo "docker ps -q -f name=dl-creator-jaeger" > logs/jaeger.pid
+    else
+        print_error "Failed to start Jaeger"
+        exit 1
+    fi
+}
 
 # Function to start backend
 start_backend() {
@@ -135,8 +187,40 @@ start_backend() {
     # Make mvnw executable
     chmod +x ./mvnw
     
-    # Start the application
-    nohup ./mvnw spring-boot:run > ../../logs/backend.log 2>&1 &
+    # Download OpenTelemetry Java agent if it doesn't exist
+    if [ ! -f "opentelemetry-javaagent.jar" ]; then
+        print_status "Downloading OpenTelemetry Java agent..."
+        curl -L -o opentelemetry-javaagent.jar 'https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar'
+    fi
+    
+    # Build the JAR file
+    print_status "Building backend JAR file..."
+    ./mvnw clean package -DskipTests
+    
+    if [ $? -ne 0 ]; then
+        print_error "Failed to build backend JAR file"
+        exit 1
+    fi
+    
+    # Find the JAR file (it should be in target directory)
+    JAR_FILE=$(find target -name "*.jar" -not -name "*-sources.jar" | head -1)
+    
+    if [ -z "$JAR_FILE" ]; then
+        print_error "JAR file not found in target directory"
+        exit 1
+    fi
+    
+    print_status "Found JAR file: $JAR_FILE"
+    
+    # Start the application with OpenTelemetry agent
+    nohup java -javaagent:opentelemetry-javaagent.jar \
+        -Dotel.service.name=dl-creator-backend \
+        -Dotel.traces.exporter=otlp \
+        -Dotel.exporter.otlp.endpoint=http://localhost:4317 \
+        -Dotel.exporter.otlp.protocol=grpc \
+        -Dotel.traces.sampler=always_on \
+        -jar "$JAR_FILE" > ../../logs/backend.log 2>&1 &
+    
     BACKEND_PID=$!
     echo $BACKEND_PID > ../../logs/backend.pid
     
@@ -231,6 +315,13 @@ cleanup() {
         rm logs/rasa-server.pid
     fi
     
+    # Stop Jaeger container
+    if [ -f "logs/jaeger.pid" ]; then
+        docker stop dl-creator-jaeger >/dev/null 2>&1 || true
+        docker rm dl-creator-jaeger >/dev/null 2>&1 || true
+        rm logs/jaeger.pid
+    fi
+    
     print_success "All services stopped."
     exit 0
 }
@@ -240,6 +331,9 @@ trap cleanup SIGINT SIGTERM
 
 # Start all services
 print_status "Starting DL Creator Development Environment..."
+
+start_jaeger
+sleep 5
 
 start_backend
 sleep 5
@@ -267,6 +361,7 @@ echo "  Backend API: http://localhost:7500"
 echo "  H2 Console: http://localhost:7500/h2-console"
 echo "  Rasa Server: http://localhost:5005"
 echo "  Rasa Action Server: http://localhost:5055"
+echo "  Jaeger UI: http://localhost:16686"
 
 print_status "Press Ctrl+C to stop all services"
 
