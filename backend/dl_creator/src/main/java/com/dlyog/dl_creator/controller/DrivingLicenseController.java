@@ -1,5 +1,6 @@
 package com.dlyog.dl_creator.controller;
 
+import com.dlyog.dl_creator.TraceStuff;
 import com.dlyog.dl_creator.model.DrivingLicense;
 import com.dlyog.dl_creator.record.ApiResponse;
 import com.dlyog.dl_creator.record.DrivingLicenseRequest;
@@ -16,6 +17,7 @@ public class DrivingLicenseController {
     @Autowired
     DrivingLicenseService drivingLicenseService;
 
+    @TraceStuff("create")
     @PostMapping("/create")
     public ResponseEntity<?> createDrivingLicense(@RequestBody DrivingLicenseRequest drivingLicenseRequest) {
         DrivingLicenseResponse drivingLicense = drivingLicenseService.createDrivingLicense(drivingLicenseRequest);
@@ -24,6 +26,7 @@ public class DrivingLicenseController {
                 .message("Driving license created successfully")
                 .data(drivingLicense).build());
     }
+    @TraceStuff("getLicenseDetails")
     @GetMapping("/getLicenseDetails")
     public ResponseEntity<?> getDrivingLicense() {
         DrivingLicenseResponse drivingLicenseResponse = drivingLicenseService.getDrivingLicense();
@@ -32,7 +35,7 @@ public class DrivingLicenseController {
                 .message("Driving license retrieved successfully")
                 .data(drivingLicenseResponse).build());
     }
-
+@TraceStuff("updateStatus")
     @PostMapping("/updateStatus")
     public ResponseEntity<?> updateStatus(@RequestParam String status) {
         DrivingLicenseResponse drivingLicense = drivingLicenseService.updateStatus(status);
@@ -41,7 +44,7 @@ public class DrivingLicenseController {
                 .message("Driving license status updated successfully")
                 .data(drivingLicense).build());
     }
-
+@TraceStuff("updateLicenseInfo")
     @PostMapping("/updateLicenseInfo")
     public ResponseEntity<?> updateLicenseInfo(@RequestBody DrivingLicenseUpdateRequest drivingLicenseRequest) {
         DrivingLicenseResponse drivingLicense = drivingLicenseService.updateLicenseInfo(drivingLicenseRequest);
@@ -51,6 +54,7 @@ public class DrivingLicenseController {
                 .data(drivingLicense).build());
     }
 
+@TraceStuff("changeAddress")
     @PostMapping("/changeAddress")
     public ResponseEntity<?> changeAddress(@RequestParam String address) {
         DrivingLicenseResponse drivingLicense = drivingLicenseService.changeAddress(address);
@@ -59,6 +63,7 @@ public class DrivingLicenseController {
                 .message("Driving license address changed successfully")
                 .data(drivingLicense).build());
     }
+    @TraceStuff("renewLicense")
     @PostMapping("/renewLicense")
     public ResponseEntity<?> renewLicense() {
         DrivingLicenseResponse drivingLicense = drivingLicenseService.renewLicense();

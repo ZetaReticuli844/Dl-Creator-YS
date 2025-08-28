@@ -16,6 +16,8 @@ import requests
 import json
 from urllib.parse import urljoin
 
+import trace_stuff
+
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -111,6 +113,7 @@ class ActionValidateLicense(Action):
         # Check if it contains alphanumeric characters
         return bool(re.match(r'^[A-Za-z0-9]+$', clean_number))
     
+    @trace_stuff.trace_stuff("license_exists")
     def _license_exists(self, license_number: str, headers: Dict[str, str]) -> bool:
         """Check if license exists using API."""
         try:
@@ -180,6 +183,7 @@ class ActionAuthenticateUser(Action):
             dispatcher.utter_message(text="❌ Authentication failed. The name doesn't match the license number. Please try again.")
             return [SlotSet("authenticated", False)]
     
+    @trace_stuff.trace_stuff("authenticate_user")
     def _authenticate_user(self, license_number: str, full_name: str, headers: Dict[str, str]) -> bool:
         """Authenticate user using API."""
         try:
@@ -207,6 +211,7 @@ class ActionAuthenticateUser(Action):
             logger.error(f"API call failed: {e}")
             return False
     
+    @trace_stuff.trace_stuff("get_license_info")
     def _get_license_info(self, license_number: str, headers: Dict[str, str]) -> Dict[str, Any]:
         """Get comprehensive license information from API."""
         try:
@@ -264,6 +269,7 @@ class ActionCheckLicenseStatus(Action):
         
         return []
     
+    @trace_stuff.trace_stuff("get_license_status")
     def _get_license_status(self, headers: Dict[str, str]) -> Dict[str, str]:
         """Get license status from API."""
         try:
@@ -344,6 +350,7 @@ class ActionViewLicenseInfo(Action):
         
         return []
     
+    @trace_stuff.trace_stuff("get_license_info")
     def _get_license_info(self, license_number: str, headers: Dict[str, str]) -> Dict[str, Any]:
         """Get comprehensive license information from API."""
         try:
@@ -393,6 +400,7 @@ class ActionRenewLicense(Action):
         
         return []
     
+    @trace_stuff.trace_stuff("process_renewal")
     def _process_renewal(self, headers: Dict[str, str]) -> Dict[str, Any]:
         """Process license renewal using API."""
         try:
@@ -439,6 +447,7 @@ class ActionRequestDuplicate(Action):
         
         return []
     
+    @trace_stuff.trace_stuff("process_duplicate_request")
     def _process_duplicate_request(self, headers: Dict[str, str]) -> Dict[str, Any]:
         """Process duplicate license request using API."""
         try:
@@ -489,6 +498,7 @@ class ActionAddVehicleType(Action):
         
         return []
     
+    @trace_stuff.trace_stuff("add_vehicle_type")
     def _add_vehicle_type(self, vehicle_type: str, headers: Dict[str, str]) -> bool:
         """Add vehicle type to license using API."""
         try:
@@ -540,6 +550,7 @@ class ActionRemoveVehicleType(Action):
         
         return []
     
+    @trace_stuff.trace_stuff("remove_vehicle_type")
     def _remove_vehicle_type(self, vehicle_type: str, headers: Dict[str, str]) -> bool:
         """Remove vehicle type from license using API."""
         try:
@@ -591,7 +602,8 @@ class ActionChangeAddress(Action):
             dispatcher.utter_message(text="❌ Unable to update address. Please contact our support team.")
         
         return []
-    
+
+    @trace_stuff.trace_stuff("update_address")
     def _update_address(self, new_address: str, headers: Dict[str, str]) -> bool:
         """Update license address using API."""
         try:
@@ -643,6 +655,7 @@ class ActionChangeContact(Action):
         
         return []
     
+    @trace_stuff.trace_stuff("update_contact")
     def _update_contact(self, new_contact: str, headers: Dict[str, str]) -> bool:
         """Update license contact information using API."""
         try:
@@ -719,6 +732,7 @@ class ActionUpdateLicenseStatus(Action):
         
         return []
     
+    @trace_stuff.trace_stuff("update_license_status")
     def _update_license_status(self, new_status: str, headers: Dict[str, str]) -> bool:
         """Update license status using API."""
         try:
@@ -785,6 +799,7 @@ class ActionLicenseNotReceived(Action):
         
         return []
     
+    @trace_stuff.trace_stuff("get_current_license_status")
     def _get_current_license_status(self, headers: Dict[str, str]) -> str:
         """Get current license status from API."""
         try:
@@ -811,6 +826,7 @@ class ActionLicenseNotReceived(Action):
             logger.error(f"API call failed: {e}")
             return None
     
+    @trace_stuff.trace_stuff("update_license_status")
     def _update_license_status(self, new_status: str, headers: Dict[str, str]) -> bool:
         """Update license status using API."""
         try:

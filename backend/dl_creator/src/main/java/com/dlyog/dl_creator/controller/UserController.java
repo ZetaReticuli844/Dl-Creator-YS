@@ -1,5 +1,6 @@
 package com.dlyog.dl_creator.controller;
 
+import com.dlyog.dl_creator.TraceStuff;
 import com.dlyog.dl_creator.record.ApiResponse;
 import com.dlyog.dl_creator.record.UserCreationRequest;
 import com.dlyog.dl_creator.dto.UserDto;
@@ -36,6 +37,7 @@ public class UserController {
                 .build());
     }
 
+    @TraceStuff("createUser")
     @PostMapping("/createUser")
     public ResponseEntity<ApiResponse<UserDto>> createUser(@Valid @RequestBody UserCreationRequest request) {
         UserDto createdUser = userService.createUser(request);
