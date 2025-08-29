@@ -29,6 +29,10 @@ intents:
   - help
   - bot_challenge
   
+  # GPT integration intents
+  - ask_gpt
+  - general_question
+  
   # Fallback and error handling
   - nlu_fallback
   - out_of_scope
@@ -134,6 +138,8 @@ actions:
   - action_change_address
   - action_change_contact
   - action_fallback
+  - action_gpt_fallback
+  - action_gpt_query
 
 session_config:
   session_expiration_time: 60

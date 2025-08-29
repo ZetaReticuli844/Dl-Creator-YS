@@ -15,8 +15,14 @@ import random
 import requests
 import json
 from urllib.parse import urljoin
+import os
+from dotenv import load_dotenv
+import openai
 
 import trace_stuff
+
+# Load environment variables
+load_dotenv()
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -24,6 +30,25 @@ logger = logging.getLogger(__name__)
 
 # Import API configuration
 from api_config import APIConfig, APIResponse, APIError, format_license_number, parse_api_date, mask_sensitive_data
+
+def get_user_license_number(tracker: Tracker) -> str:
+    """Get user license number from tracker session or metadata."""
+    # Try to get from slot first
+    license_number = tracker.get_slot("license_number")
+    if license_number:
+        return license_number
+    
+    # Try to get from latest message metadata
+    try:
+        metadata = (tracker.latest_message or {}).get("metadata", {}) if hasattr(tracker, "latest_message") else {}
+        license_from_metadata = metadata.get("license_number")
+        if license_from_metadata:
+            return license_from_metadata
+    except Exception:
+        pass
+    
+    # Return None if not found
+    return None
 
 def build_auth_headers_from_tracker(tracker: Tracker) -> Dict[str, str]:
     """Build Authorization headers using user's token from message metadata when available.
@@ -862,3 +887,252 @@ class ActionFallback(Action):
             text="I'm not sure I understood that. Could you please rephrase or ask for help to see what I can assist you with?"
         )
         return []
+
+
+class ActionGPTFallback(Action):
+    """Action to handle queries using DeepSeek via OpenRouter when Rasa cannot understand or when specifically requested."""
+    
+    def name(self) -> Text:
+        return "action_gpt_fallback"
+    
+    def __init__(self):
+        super().__init__()
+        # Initialize OpenRouter client for DeepSeek
+        api_key = os.getenv('DEEPSEEK_API_KEY') or os.getenv('OPENROUTER_API_KEY')
+        if not api_key:
+            logger.warning("OPENROUTER_API_KEY or DEEPSEEK_API_KEY not found in environment variables")
+            self.client = None
+        else:
+            try:
+                self.client = openai.OpenAI(
+                    api_key=api_key,
+                    base_url="https://openrouter.ai/api/v1"
+                )
+            except Exception as e:
+                logger.error(f"Failed to initialize OpenRouter client: {e}")
+                self.client = None
+    
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        if not self.client:
+            dispatcher.utter_message(
+                text="I'm sorry, but I'm having trouble accessing the advanced AI assistant right now. "
+                     "Let me help you with the driving license services I can provide. "
+                     "You can ask me about license status, renewals, duplicates, and more!"
+            )
+            return []
+        
+        # Get the user's message
+        user_message = tracker.latest_message.get('text', '')
+        
+        # Get conversation context (last few messages)
+        context = self._get_conversation_context(tracker)
+        
+        try:
+            # Call GPT with context about the chatbot's purpose
+            response = self._call_gpt(user_message, context)
+            
+            if response:
+                dispatcher.utter_message(text=response)
+            else:
+                # Fallback if GPT fails
+                dispatcher.utter_message(
+                    text="I'm having trouble understanding that right now. Let me help you with "
+                         "driving license services like checking status, renewals, or duplicate requests. "
+                         "What can I assist you with?"
+                )
+        except Exception as e:
+            logger.error(f"DeepSeek API call failed: {e}")
+            dispatcher.utter_message(
+                text="I apologize, but I'm experiencing some technical difficulties. "
+                     "However, I can still help you with all your driving license needs! "
+                     "What would you like to do today?"
+            )
+        
+        return []
+    
+    def _get_conversation_context(self, tracker: Tracker) -> str:
+        """Get recent conversation history for context."""
+        messages = []
+        events = tracker.events
+        
+        # Get last 10 user messages and bot responses
+        for event in events[-20:]:
+            if event.get('event') == 'user':
+                messages.append(f"User: {event.get('text', '')}")
+            elif event.get('event') == 'bot' and event.get('text'):
+                messages.append(f"Bot: {event.get('text', '')}")
+        
+        return "\n".join(messages[-10:]) if messages else ""
+    
+    @trace_stuff.trace_stuff("gpt_api_call")
+    def _call_gpt(self, user_message: str, context: str) -> str:
+        """Call OpenAI GPT API with proper context."""
+        try:
+            # Create a system prompt that maintains the chatbot's identity
+            system_prompt = """You are an AI assistant for a Driving License Management System. 
+            Your primary role is to help users with driving license related queries including:
+            - Checking license status
+            - License renewals
+            - Duplicate license requests
+            - Adding/removing vehicle types
+            - Address and contact updates
+            - General license information
+
+            When users ask questions outside of driving license topics, politely redirect them back to license-related services while being helpful.
+            
+            Keep your responses concise, helpful, and professional. Always maintain the helpful and friendly tone of the license management system.
+            
+            If users ask for specific license actions (like checking status, renewals, etc.), let them know that you can help them navigate to the right service, but the actual processing will be handled by the official system.
+            
+            Context from recent conversation:
+            """ + context
+            
+            # Prepare messages for GPT
+            messages = [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_message}
+            ]
+            
+            # Call DeepSeek via OpenRouter API
+            response = self.client.chat.completions.create(
+                model="deepseek/deepseek-r1-0528-qwen3-8b:free",
+                messages=messages,
+                max_tokens=300,
+                temperature=0.7,
+                timeout=10,
+                extra_headers={
+                    "HTTP-Referer": "https://localhost:5005",  # Your chatbot URL
+                    "X-Title": "Rasa License Chatbot",  # Your app name
+                }
+            )
+            
+            if response.choices and len(response.choices) > 0:
+                return response.choices[0].message.content.strip()
+            else:
+                return None
+                
+        except openai.APITimeoutError:
+            logger.error("OpenRouter API timeout")
+            return None
+        except openai.APIError as e:
+            logger.error(f"OpenRouter API error: {e}")
+            return None
+        except Exception as e:
+            logger.error(f"Unexpected error calling OpenRouter/DeepSeek: {e}")
+            return None
+
+
+class ActionGPTQuery(Action):
+    """Action to handle direct DeepSeek queries via OpenRouter when users explicitly ask for AI assistance."""
+    
+    def name(self) -> Text:
+        return "action_gpt_query"
+    
+    def __init__(self):
+        super().__init__()
+        # Initialize OpenRouter client for DeepSeek
+        api_key = os.getenv('DEEPSEEK_API_KEY') or os.getenv('OPENROUTER_API_KEY')
+        if not api_key:
+            logger.warning("OPENROUTER_API_KEY or DEEPSEEK_API_KEY not found in environment variables")
+            self.client = None
+        else:
+            try:
+                self.client = openai.OpenAI(
+                    api_key=api_key,
+                    base_url="https://openrouter.ai/api/v1"
+                )
+            except Exception as e:
+                logger.error(f"Failed to initialize OpenRouter client: {e}")
+                self.client = None
+    
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        if not self.client:
+            dispatcher.utter_message(
+                text="The AI assistant is currently unavailable. However, I can still help you with "
+                     "all your driving license needs! What would you like to do?"
+            )
+            return []
+        
+        user_message = tracker.latest_message.get('text', '')
+        context = self._get_conversation_context(tracker)
+        
+        try:
+            response = self._call_gpt(user_message, context)
+            
+            if response:
+                # Add a note about available services
+                response += "\n\n💡 Remember, I can also help you with specific license services like status checks, renewals, and more!"
+                dispatcher.utter_message(text=response)
+            else:
+                dispatcher.utter_message(
+                    text="I'm having trouble processing that request right now. "
+                         "Let me help you with driving license services instead. What do you need?"
+                )
+        except Exception as e:
+            logger.error(f"DeepSeek query failed: {e}")
+            dispatcher.utter_message(
+                text="I'm experiencing some technical difficulties with the AI assistant. "
+                     "But I'm still here to help with all your license-related needs!"
+            )
+        
+        return []
+    
+    def _get_conversation_context(self, tracker: Tracker) -> str:
+        """Get recent conversation history for context."""
+        messages = []
+        events = tracker.events
+        
+        for event in events[-20:]:
+            if event.get('event') == 'user':
+                messages.append(f"User: {event.get('text', '')}")
+            elif event.get('event') == 'bot' and event.get('text'):
+                messages.append(f"Bot: {event.get('text', '')}")
+        
+        return "\n".join(messages[-10:]) if messages else ""
+    
+    @trace_stuff.trace_stuff("gpt_query_call")
+    def _call_gpt(self, user_message: str, context: str) -> str:
+        """Call OpenAI GPT API for general queries."""
+        try:
+            system_prompt = """You are a helpful AI assistant integrated into a Driving License Management System. 
+            You can answer general questions and provide information on various topics.
+            
+            However, always remember your context - you're part of a driving license system, so when appropriate, 
+            relate your answers back to driving, licenses, or transportation topics.
+            
+            Keep responses helpful, concise, and conversational.
+            
+            Recent conversation context:
+            """ + context
+            
+            messages = [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_message}
+            ]
+            
+            response = self.client.chat.completions.create(
+                model="deepseek/deepseek-r1-0528-qwen3-8b:free",
+                messages=messages,
+                max_tokens=250,
+                temperature=0.8,
+                timeout=10,
+                extra_headers={
+                    "HTTP-Referer": "https://localhost:5005",  # Your chatbot URL
+                    "X-Title": "Rasa License Chatbot",  # Your app name
+                }
+            )
+            
+            if response.choices and len(response.choices) > 0:
+                return response.choices[0].message.content.strip()
+            else:
+                return None
+                
+        except Exception as e:
+            logger.error(f"DeepSeek query call failed: {e}")
+            return None

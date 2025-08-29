@@ -201,6 +201,47 @@ nlu:
     - How to get license?
     - License application
 
+- intent: ask_gpt
+  examples: |
+    - Ask AI
+    - Use AI assistant
+    - AI help
+    - Ask the AI
+    - Get AI assistance
+    - Use artificial intelligence
+    - AI query
+    - Ask smart assistant
+    - Use AI
+    - Artificial intelligence help
+    - AI support
+    - Smart assistant
+    - Use GPT
+    - Ask GPT
+    - GPT help
+
+- intent: general_question
+  examples: |
+    - What's the weather like?
+    - Tell me a joke
+    - What time is it?
+    - How old are you?
+    - What's your favorite color?
+    - Can you sing?
+    - What's the capital of France?
+    - How many planets are there?
+    - What's 2+2?
+    - Tell me about history
+    - What's the meaning of life?
+    - Can you dance?
+    - What's your name?
+    - Where are you from?
+    - What do you look like?
+    - Tell me about yourself
+    - What can you do?
+    - Explain quantum physics
+    - What's machine learning?
+    - How does the internet work?
+
 
 
 - intent: provide_vehicle_type

@@ -1,10 +1,3 @@
-Unable to find image 'jaegertracing/all-in-one:latest' locally
-latest: Pulling from jaegertracing/all-in-one
-6e174226ea69: Already exists
-c3c6ac1c2271: Already exists
-1befbfd79aff: Already exists
-bd576591458f: Already exists
-8e0ed29a381b: Already exists
-Digest: sha256:144b7028db6045b28b50c4728dd3bea14fa76ab024b64afeccec51c8cb1edd63
-Status: Downloaded newer image for jaegertracing/all-in-one:latest
-08d22905a1a8a31b9783aa082ad7e5c0d8b77dfc21f765dc5ebb5204137d3c4b
+docker: Error response from daemon: Conflict. The container name "/dl-creator-jaeger" is already in use by container "08d22905a1a8a31b9783aa082ad7e5c0d8b77dfc21f765dc5ebb5204137d3c4b". You have to remove (or rename) that container to be able to reuse that name.
+
+Run 'docker run --help' for more information
