@@ -28,14 +28,24 @@ rules:
   - action: utter_iamabot
 
 # Fallback handling
-- rule: Handle NLU fallback
+- rule: Handle NLU fallback with GPT
   steps:
   - intent: nlu_fallback
-  - action: action_fallback
+  - action: action_gpt_fallback
 
-- rule: Handle out of scope requests
+- rule: Handle out of scope requests with GPT
   steps:
   - intent: out_of_scope
-  - action: utter_out_of_scope
+  - action: action_gpt_query
+
+- rule: Handle direct GPT requests
+  steps:
+  - intent: ask_gpt
+  - action: action_gpt_query
+
+- rule: Handle general questions with GPT
+  steps:
+  - intent: general_question
+  - action: action_gpt_query
 
 

@@ -64,3 +64,5 @@ Traceback (most recent call last):
   File "/Users/yogeshshekhawat/assignment/chatbot/rasa_env/lib/python3.10/site-packages/sanic/router.py", line 44, in _get
     raise NotFound("Requested URL {} not found".format(e.path))
 sanic.exceptions.NotFound: Requested URL  not found
+✅ OpenTelemetry configured successfully for endpoint: http://localhost:4317
+{'success': True, 'message': 'Driving license retrieved successfully', 'data': {'id': 1, 'userId': 1, 'licenseNumber': 'DL-1-175642074395972297', 'issueDate': '2025-08-28T22:39:03.962+00:00', 'expirationDate': '2025-08-28T22:39:03.962+00:00', 'firstName': 'James', 'lastName': 'Cordon', 'vehicleType': 'Car', 'vehicleMake': 'Audi', 'address': 'D115 South City', 'licenseStatus': None}}
