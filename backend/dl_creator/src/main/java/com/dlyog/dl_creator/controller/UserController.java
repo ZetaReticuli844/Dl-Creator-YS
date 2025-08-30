@@ -20,6 +20,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @TraceStuff("getCurrentUserController")
     @GetMapping("/currentUser")
     public ResponseEntity<ApiResponse<UserDto>> getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -37,7 +38,8 @@ public class UserController {
                 .build());
     }
 
-    @TraceStuff("createUser")
+
+    @TraceStuff("createUserController")
     @PostMapping("/createUser")
     public ResponseEntity<ApiResponse<UserDto>> createUser(@Valid @RequestBody UserCreationRequest request) {
         UserDto createdUser = userService.createUser(request);

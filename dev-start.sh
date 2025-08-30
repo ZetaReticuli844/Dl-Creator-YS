@@ -137,18 +137,36 @@ if port_in_use 4317; then
     exit 1
 fi
 
+if port_in_use 9090; then
+    print_error "Port 9090 is already in use. Please free up the port."
+    exit 1
+fi
+
+if port_in_use 3001; then
+    print_error "Port 3001 is already in use. Please free up the port."
+    exit 1
+fi
+
 print_success "All required ports are available!"
 
 # Create logs directory
 mkdir -p logs
 
+# Create Docker network for monitoring
+create_monitoring_network() {
+    if ! docker network ls | grep -q "dl-creator-monitoring"; then
+        print_status "Creating Docker network for monitoring..."
+        docker network create dl-creator-monitoring >/dev/null 2>&1
+    fi
+}
+
 # Function to start Jaeger
 start_jaeger() {
     print_status "Starting Jaeger All-in-One..."
     
-    # Check if Jaeger container is already running
-    if docker ps -q -f name=dl-creator-jaeger | grep -q .; then
-        print_warning "Jaeger container is already running, stopping it first..."
+    # Check if Jaeger container exists (running or stopped)
+    if docker ps -aq -f name=dl-creator-jaeger | grep -q .; then
+        print_warning "Jaeger container already exists, removing it first..."
         docker stop dl-creator-jaeger >/dev/null 2>&1
         docker rm dl-creator-jaeger >/dev/null 2>&1
     fi
@@ -156,6 +174,7 @@ start_jaeger() {
     # Start Jaeger container
     docker run -d \
         --name dl-creator-jaeger \
+        --network dl-creator-monitoring \
         -p 16686:16686 \
         -p 14250:14250 \
         -p 14268:14268 \
@@ -169,6 +188,73 @@ start_jaeger() {
         echo "docker ps -q -f name=dl-creator-jaeger" > logs/jaeger.pid
     else
         print_error "Failed to start Jaeger"
+        exit 1
+    fi
+}
+
+# Function to start Prometheus
+start_prometheus() {
+    print_status "Starting Prometheus..."
+    
+    # Check if Prometheus container exists (running or stopped)
+    if docker ps -aq -f name=dl-creator-prometheus | grep -q .; then
+        print_warning "Prometheus container already exists, removing it first..."
+        docker stop dl-creator-prometheus >/dev/null 2>&1
+        docker rm dl-creator-prometheus >/dev/null 2>&1
+    fi
+    
+    # Start Prometheus container
+    docker run -d \
+        --name dl-creator-prometheus \
+        --network dl-creator-monitoring \
+        -p 9090:9090 \
+        --add-host=host.docker.internal:host-gateway \
+        -v "$(pwd)/backend/dl_creator/prometheus.yml:/etc/prometheus/prometheus.yml" \
+        prom/prometheus:latest \
+        --config.file=/etc/prometheus/prometheus.yml \
+        --storage.tsdb.path=/prometheus \
+        --web.console.libraries=/etc/prometheus/console_libraries \
+        --web.console.templates=/etc/prometheus/consoles \
+        --storage.tsdb.retention.time=15d \
+        --web.enable-lifecycle > logs/prometheus.log 2>&1
+    
+    if [ $? -eq 0 ]; then
+        print_success "Prometheus started successfully"
+        echo "docker ps -q -f name=dl-creator-prometheus" > logs/prometheus.pid
+    else
+        print_error "Failed to start Prometheus"
+        exit 1
+    fi
+}
+
+# Function to start Grafana
+start_grafana() {
+    print_status "Starting Grafana..."
+    
+    # Check if Grafana container exists (running or stopped)
+    if docker ps -aq -f name=dl-creator-grafana | grep -q .; then
+        print_warning "Grafana container already exists, removing it first..."
+        docker stop dl-creator-grafana >/dev/null 2>&1
+        docker rm dl-creator-grafana >/dev/null 2>&1
+    fi
+    
+    # Start Grafana container
+    docker run -d \
+        --name dl-creator-grafana \
+        --network dl-creator-monitoring \
+        -p 3001:3000 \
+        -e GF_SECURITY_ADMIN_USER=admin \
+        -e GF_SECURITY_ADMIN_PASSWORD=admin123 \
+        -e GF_USERS_ALLOW_SIGN_UP=false \
+        -v "$(pwd)/backend/dl_creator/grafana/provisioning:/etc/grafana/provisioning" \
+        -v "$(pwd)/backend/dl_creator/grafana/dashboards:/var/lib/grafana/dashboards" \
+        grafana/grafana:latest > logs/grafana.log 2>&1
+    
+    if [ $? -eq 0 ]; then
+        print_success "Grafana started successfully"
+        echo "docker ps -q -f name=dl-creator-grafana" > logs/grafana.pid
+    else
+        print_error "Failed to start Grafana"
         exit 1
     fi
 }
@@ -216,6 +302,8 @@ start_backend() {
     nohup java -javaagent:opentelemetry-javaagent.jar \
         -Dotel.service.name=dl-creator-backend \
         -Dotel.traces.exporter=otlp \
+        -Dotel.metrics.exporter=none \
+        -Dotel.logs.exporter=none \
         -Dotel.exporter.otlp.endpoint=http://localhost:4317 \
         -Dotel.exporter.otlp.protocol=grpc \
         -Dotel.traces.sampler=always_on \
@@ -315,12 +403,27 @@ cleanup() {
         rm logs/rasa-server.pid
     fi
     
-    # Stop Jaeger container
+    # Stop Docker containers
     if [ -f "logs/jaeger.pid" ]; then
         docker stop dl-creator-jaeger >/dev/null 2>&1 || true
         docker rm dl-creator-jaeger >/dev/null 2>&1 || true
         rm logs/jaeger.pid
     fi
+    
+    if [ -f "logs/prometheus.pid" ]; then
+        docker stop dl-creator-prometheus >/dev/null 2>&1 || true
+        docker rm dl-creator-prometheus >/dev/null 2>&1 || true
+        rm logs/prometheus.pid
+    fi
+    
+    if [ -f "logs/grafana.pid" ]; then
+        docker stop dl-creator-grafana >/dev/null 2>&1 || true
+        docker rm dl-creator-grafana >/dev/null 2>&1 || true
+        rm logs/grafana.pid
+    fi
+    
+    # Clean up Docker network
+    docker network rm dl-creator-monitoring >/dev/null 2>&1 || true
     
     print_success "All services stopped."
     exit 0
@@ -332,8 +435,16 @@ trap cleanup SIGINT SIGTERM
 # Start all services
 print_status "Starting DL Creator Development Environment..."
 
+create_monitoring_network
+
 start_jaeger
 sleep 5
+
+start_prometheus
+sleep 5
+
+start_grafana
+sleep 10
 
 start_backend
 sleep 5
@@ -350,6 +461,8 @@ wait_for_service "localhost" 7500 "Backend API" &
 wait_for_service "localhost" 5005 "Rasa Server" &
 wait_for_service "localhost" 5055 "Rasa Action Server" &
 wait_for_service "localhost" 3000 "Frontend" &
+wait_for_service "localhost" 9090 "Prometheus" &
+wait_for_service "localhost" 3001 "Grafana" &
 
 # Wait for all background processes
 wait
@@ -362,6 +475,8 @@ echo "  H2 Console: http://localhost:7500/h2-console"
 echo "  Rasa Server: http://localhost:5005"
 echo "  Rasa Action Server: http://localhost:5055"
 echo "  Jaeger UI: http://localhost:16686"
+echo "  Prometheus: http://localhost:9090"
+echo "  Grafana: http://localhost:3001 (admin/admin123)"
 
 print_status "Press Ctrl+C to stop all services"
 

@@ -1,5 +1,6 @@
 package com.dlyog.dl_creator.service;
 
+import com.dlyog.dl_creator.TraceStuff;
 import com.dlyog.dl_creator.dto.UserDto;
 import com.dlyog.dl_creator.model.User;
 import com.dlyog.dl_creator.record.UserCreationRequest;
@@ -15,6 +16,8 @@ public class UserServiceImpl implements UserService {
 @Autowired UserJpa userJpa;
 @Autowired PasswordEncoder passwordEncoder;
 
+
+    @TraceStuff("createUserService")
     @Override
     public UserDto createUser(UserCreationRequest user) {
         User user1 = User.builder()

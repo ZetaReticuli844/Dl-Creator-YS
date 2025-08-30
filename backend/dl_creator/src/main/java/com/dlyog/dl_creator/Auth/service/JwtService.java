@@ -1,5 +1,6 @@
 package com.dlyog.dl_creator.Auth.service;
 
+import com.dlyog.dl_creator.TraceStuff;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -32,6 +33,7 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
+    @TraceStuff("generateToken")
     public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
