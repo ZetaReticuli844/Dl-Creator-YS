@@ -1,12 +1,17 @@
 package com.dlyog.dl_creator.service;
 
 import com.dlyog.dl_creator.Enum.LicenseStatusEnum;
+import com.dlyog.dl_creator.TraceStuff;
 import com.dlyog.dl_creator.model.DrivingLicense;
 import com.dlyog.dl_creator.model.User;
 import com.dlyog.dl_creator.record.DrivingLicenseRequest;
 import com.dlyog.dl_creator.record.DrivingLicenseResponse;
 import com.dlyog.dl_creator.record.DrivingLicenseUpdateRequest;
 import com.dlyog.dl_creator.repository.DrivingLicenseJpa;
+import io.opentelemetry.api.GlobalOpenTelemetry;
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Scope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,7 +22,11 @@ import java.util.Random;
 
 @Service
 public class DrivingLicenseServiceImpl implements DrivingLicenseService {
-  @Autowired DrivingLicenseJpa drivingLicenseJpa;
+    @Autowired
+    DrivingLicenseJpa drivingLicenseJpa;
+
+
+    @TraceStuff("createDrivingLicenseService")
     @Override
     public DrivingLicenseResponse createDrivingLicense(DrivingLicenseRequest drivingLicenseRequest) {
         try {
@@ -48,13 +57,14 @@ public class DrivingLicenseServiceImpl implements DrivingLicenseService {
                     .licenseStatus(drivingLicense.getLicenseStatus().toString())
                     .address(drivingLicense.getAddress())
                     .build();
-        }catch(Exception e){
-                System.out.println("WRONG " + e.getMessage());
-                return null;
-            }
+        } catch (Exception e) {
+            System.out.println("WRONG " + e.getMessage());
+            return null;
+        }
 
     }
 
+    @TraceStuff("getDrivingLicenseService")
     @Override
     public DrivingLicenseResponse getDrivingLicense() {
         try {
@@ -79,6 +89,7 @@ public class DrivingLicenseServiceImpl implements DrivingLicenseService {
         }
     }
 
+    @TraceStuff("updateStatusService")
     @Override
     public DrivingLicenseResponse updateStatus(String status) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -115,6 +126,7 @@ public class DrivingLicenseServiceImpl implements DrivingLicenseService {
 
     }
 
+    @TraceStuff("updateLicenseInfoService")
     @Override
     public DrivingLicenseResponse updateLicenseInfo(DrivingLicenseUpdateRequest drivingLicenseUpdateRequest) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -155,6 +167,7 @@ public class DrivingLicenseServiceImpl implements DrivingLicenseService {
         return drivingLicenseResponse;
     }
 
+    @TraceStuff("changeAddressService")
     @Override
     public DrivingLicenseResponse changeAddress(String address) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -177,6 +190,7 @@ public class DrivingLicenseServiceImpl implements DrivingLicenseService {
         return drivingLicenseResponse;
     }
 
+    @TraceStuff("renewLicenseService")
     @Override
     public DrivingLicenseResponse renewLicense() {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -202,10 +216,50 @@ public class DrivingLicenseServiceImpl implements DrivingLicenseService {
         return drivingLicenseResponse;
     }
 
+    @TraceStuff("changeVehicleService")
+    @Override
+    public DrivingLicenseResponse changeVehicle(String vehicleBrand, String vehicleType) {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        DrivingLicense drivingLicense = drivingLicenseJpa.findByUserId(currentUser.getId());
+        drivingLicense.setVehicleMake(vehicleBrand);
+        drivingLicense.setVehicleType(vehicleType);
+        drivingLicenseJpa.save(drivingLicense);
+        DrivingLicenseResponse drivingLicenseResponse = DrivingLicenseResponse.builder()
+                .id(drivingLicense.getId())
+                .userId(currentUser.getId())
+                .licenseNumber(drivingLicense.getLicenseNumber())
+                .issueDate(drivingLicense.getIssueDate())
+                .expirationDate(drivingLicense.getExpirationDate())
+                .firstName(drivingLicense.getFirstName())
+                .lastName(drivingLicense.getLastName())
+                .vehicleType(drivingLicense.getVehicleType())
+                .vehicleMake(drivingLicense.getVehicleMake())
+                .licenseStatus(drivingLicense.getLicenseStatus().toString())
+                .address(drivingLicense.getAddress())
+                .build();
+        return drivingLicenseResponse;
+    }
+
 
     private String generateLicenseNumber(Integer userId) {
-        Random random = new Random();
-        int randomDigits = random.nextInt(900000);
-        return "DL-" + userId + "-" + System.currentTimeMillis()+randomDigits;
+        Tracer tracer = GlobalOpenTelemetry.getTracer("dl-creator-backend");
+        Span span = tracer.spanBuilder("generateLicenseNumber").startSpan();
+
+        try (Scope scope = span.makeCurrent()) {
+            Random random = new Random();
+            int randomDigits = random.nextInt(900000);
+
+            String license = "DL-" + userId + "-" + System.currentTimeMillis() + randomDigits;
+            span.setAttribute("user.id", userId);
+            span.setAttribute("generated.license", license);
+
+            return license;
+        } catch (Exception e) {
+            span.recordException(e);
+            throw e;
+        } finally {
+            span.end();
+        }
     }
+
 }

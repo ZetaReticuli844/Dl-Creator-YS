@@ -16,4 +16,5 @@ public interface DrivingLicenseService {
         DrivingLicenseResponse changeAddress(String address);
 
         DrivingLicenseResponse renewLicense();
+        DrivingLicenseResponse changeVehicle(String vehicleBrand,String vehicleType);
 }

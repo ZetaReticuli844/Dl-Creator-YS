@@ -183,6 +183,29 @@ nlu:
     - Update contact number
     - Change contact details
 
+- intent: change_vehicle
+  examples: |
+    - Change my vehicle type
+    - Update vehicle information
+    - Change car to motorcycle
+    - Update my vehicle brand
+    - Change vehicle make
+    - I want to change my vehicle
+    - Update vehicle details
+    - Change from car to truck
+    - Change vehicle type and brand
+    - Update my car information
+    - Change my motorcycle to car
+    - I need to update my vehicle
+    - Change vehicle registration
+    - Update vehicle type on license
+    - Change my vehicle make and model
+    - Update car brand
+    - Change motorcycle brand
+    - I want to change my car brand
+    - Update vehicle make on license
+    - Change from Honda to Toyota
+
 - intent: general_inquiry
   examples: |
     - How do I get a license?
@@ -377,6 +400,54 @@ nlu:
     - [sarah.wilson@email.com](new_contact)
     - [555-321-6540](new_contact)
     - [david.brown@email.com](new_contact)
+
+- intent: provide_vehicle_info
+  examples: |
+    - Change to [car](vehicle_type) [Toyota](vehicle_brand)
+    - Update to [motorcycle](vehicle_type) [Honda](vehicle_brand)
+    - [truck](vehicle_type) [Ford](vehicle_brand)
+    - I want [car](vehicle_type) [BMW](vehicle_brand)
+    - Change to [motorcycle](vehicle_type) [Yamaha](vehicle_brand)
+    - [car](vehicle_type) [Mercedes](vehicle_brand)
+    - Update to [truck](vehicle_type) [Chevrolet](vehicle_brand)
+    - [motorcycle](vehicle_type) [Kawasaki](vehicle_brand)
+    - [car](vehicle_type) [Audi](vehicle_brand)
+    - Change to [truck](vehicle_type) [Nissan](vehicle_brand)
+    - [motorcycle](vehicle_type) [Suzuki](vehicle_brand)
+    - [car](vehicle_type) [Volkswagen](vehicle_brand)
+    - Update to [truck](vehicle_type) [Dodge](vehicle_brand)
+    - [car](vehicle_type) [Hyundai](vehicle_brand)
+    - [motorcycle](vehicle_type) [Ducati](vehicle_brand)
+    - I bought a new [BMW](vehicle_brand) [car](vehicle_type)
+    - I got a [Honda](vehicle_brand) [motorcycle](vehicle_type)
+    - I purchased a [Ford](vehicle_brand) [truck](vehicle_type)
+    - I have a [Toyota](vehicle_brand) [car](vehicle_type) now
+    - I bought a [Yamaha](vehicle_brand) [bike](vehicle_type)
+    - I got a new [Mercedes](vehicle_brand) [car](vehicle_type)
+    - I purchased a [Harley](vehicle_brand) [motorcycle](vehicle_type)
+    - I have a [Chevrolet](vehicle_brand) [truck](vehicle_type)
+    - I bought a [BMW](vehicle_brand) [bike](vehicle_type)
+    - I got a [Audi](vehicle_brand) [car](vehicle_type)
+    - I purchased a new [Ducati](vehicle_brand) [motorcycle](vehicle_type)
+    - I have a [Nissan](vehicle_brand) [truck](vehicle_type) now
+    - My new [car](vehicle_type) is a [Toyota](vehicle_brand)
+    - My new [motorcycle](vehicle_type) is a [Honda](vehicle_brand)
+    - My new [bike](vehicle_type) is a [BMW](vehicle_brand)
+    - My new [truck](vehicle_type) is a [Ford](vehicle_brand)
+    - Toyota car
+    - Honda motorcycle
+    - Ford truck
+    - BMW car
+    - Yamaha motorcycle
+    - Mercedes car
+    - Chevrolet truck
+    - Kawasaki motorcycle
+    - Audi car
+    - Nissan truck
+    - BMW bike
+    - Honda bike
+    - Yamaha bike
+    - Ducati bike
 
 # General conversation intents
 - intent: greet

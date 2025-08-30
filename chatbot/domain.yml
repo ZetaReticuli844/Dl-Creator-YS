@@ -13,12 +13,14 @@ intents:
   - remove_vehicle_type
   - change_address
   - change_contact
+  - change_vehicle
   - general_inquiry
   
   # Input intents
   - provide_vehicle_type
   - provide_address
   - provide_contact
+  - provide_vehicle_info
   
   # General conversation intents
   - greet
@@ -39,6 +41,7 @@ intents:
 
 entities:
   - vehicle_type
+  - vehicle_brand
   - new_address
   - new_contact
   - new_status
@@ -51,6 +54,22 @@ slots:
       entity: vehicle_type
     - type: from_text
       intent: provide_vehicle_type
+      conditions:
+      - active_loop: null
+    - type: from_text
+      intent: provide_vehicle_info
+      conditions:
+      - active_loop: null
+  
+  vehicle_brand:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: vehicle_brand
+    - type: from_text
+      intent: provide_vehicle_info
+      conditions:
+      - active_loop: null
   
   new_address:
     type: text
@@ -97,6 +116,9 @@ responses:
   utter_ask_new_contact:
     - text: "Please provide your new contact information (phone number or email)."
   
+  utter_ask_vehicle_brand:
+    - text: "What vehicle brand would you like to update to? (e.g., Toyota, Honda, Ford, BMW)"
+  
 
   
   # Renewal responses
@@ -137,6 +159,8 @@ actions:
   - action_remove_vehicle_type
   - action_change_address
   - action_change_contact
+  - action_change_vehicle
+  - action_validate_vehicle_slots
   - action_fallback
   - action_gpt_fallback
   - action_gpt_query

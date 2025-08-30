@@ -75,6 +75,38 @@ stories:
   - intent: provide_contact
   - action: action_change_contact
 
+# Change Vehicle Flow
+- story: change vehicle flow
+  steps:
+  - intent: change_vehicle
+  - action: utter_ask_vehicle_type
+  - intent: provide_vehicle_type
+  - action: utter_ask_vehicle_brand
+  - intent: provide_vehicle_info
+  - action: action_change_vehicle
+
+# Change Vehicle Flow with Complete Info
+- story: change vehicle complete info flow
+  steps:
+  - intent: change_vehicle
+  - action: action_change_vehicle
+
+# Change Vehicle Flow with Vehicle Info Provided
+- story: change vehicle with info flow
+  steps:
+  - intent: provide_vehicle_info
+  - action: action_validate_vehicle_slots
+  - action: action_change_vehicle
+
+# Change Vehicle Flow with Natural Language Response
+- story: change vehicle natural language flow
+  steps:
+  - intent: change_vehicle
+  - action: utter_ask_vehicle_type
+  - intent: provide_vehicle_info
+  - action: action_validate_vehicle_slots
+  - action: action_change_vehicle
+
 # General Inquiry Flow
 - story: general inquiry flow
   steps:

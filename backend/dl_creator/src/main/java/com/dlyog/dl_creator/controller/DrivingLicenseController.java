@@ -17,7 +17,7 @@ public class DrivingLicenseController {
     @Autowired
     DrivingLicenseService drivingLicenseService;
 
-    @TraceStuff("create")
+    @TraceStuff("createDrivingLicenseController")
     @PostMapping("/create")
     public ResponseEntity<?> createDrivingLicense(@RequestBody DrivingLicenseRequest drivingLicenseRequest) {
         DrivingLicenseResponse drivingLicense = drivingLicenseService.createDrivingLicense(drivingLicenseRequest);
@@ -26,7 +26,7 @@ public class DrivingLicenseController {
                 .message("Driving license created successfully")
                 .data(drivingLicense).build());
     }
-    @TraceStuff("getLicenseDetails")
+    @TraceStuff("getLicenseDetailsController")
     @GetMapping("/getLicenseDetails")
     public ResponseEntity<?> getDrivingLicense() {
         DrivingLicenseResponse drivingLicenseResponse = drivingLicenseService.getDrivingLicense();
@@ -35,7 +35,7 @@ public class DrivingLicenseController {
                 .message("Driving license retrieved successfully")
                 .data(drivingLicenseResponse).build());
     }
-@TraceStuff("updateStatus")
+@TraceStuff("updateStatusController")
     @PostMapping("/updateStatus")
     public ResponseEntity<?> updateStatus(@RequestParam String status) {
         DrivingLicenseResponse drivingLicense = drivingLicenseService.updateStatus(status);
@@ -44,7 +44,7 @@ public class DrivingLicenseController {
                 .message("Driving license status updated successfully")
                 .data(drivingLicense).build());
     }
-@TraceStuff("updateLicenseInfo")
+@TraceStuff("updateLicenseInfoController")
     @PostMapping("/updateLicenseInfo")
     public ResponseEntity<?> updateLicenseInfo(@RequestBody DrivingLicenseUpdateRequest drivingLicenseRequest) {
         DrivingLicenseResponse drivingLicense = drivingLicenseService.updateLicenseInfo(drivingLicenseRequest);
@@ -54,7 +54,7 @@ public class DrivingLicenseController {
                 .data(drivingLicense).build());
     }
 
-@TraceStuff("changeAddress")
+@TraceStuff("changeAddressController")
     @PostMapping("/changeAddress")
     public ResponseEntity<?> changeAddress(@RequestParam String address) {
         DrivingLicenseResponse drivingLicense = drivingLicenseService.changeAddress(address);
@@ -63,13 +63,23 @@ public class DrivingLicenseController {
                 .message("Driving license address changed successfully")
                 .data(drivingLicense).build());
     }
-    @TraceStuff("renewLicense")
+    @TraceStuff("renewLicenseController")
     @PostMapping("/renewLicense")
     public ResponseEntity<?> renewLicense() {
         DrivingLicenseResponse drivingLicense = drivingLicenseService.renewLicense();
         return ResponseEntity.ok(ApiResponse.<DrivingLicenseResponse>builder().
                 success(true)
                 .message("Driving license renewed successfully")
+                .data(drivingLicense).build());
+    }
+
+    @TraceStuff("changeVehicleController")
+    @PostMapping("/changeVehicle")
+    public ResponseEntity<?> changeVehicle(@RequestParam String vehicleBrand, @RequestParam String vehicleType) {
+        DrivingLicenseResponse drivingLicense = drivingLicenseService.changeVehicle(vehicleBrand,vehicleType);
+        return ResponseEntity.ok(ApiResponse.<DrivingLicenseResponse>builder().
+                success(true)
+                .message("Driving license vehicle changed successfully")
                 .data(drivingLicense).build());
     }
 
