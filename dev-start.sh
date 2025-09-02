@@ -147,6 +147,11 @@ if port_in_use 3001; then
     exit 1
 fi
 
+if port_in_use 9042; then
+    print_error "Port 9042 is already in use. Please free up the port."
+    exit 1
+fi
+
 print_success "All required ports are available!"
 
 # Create logs directory
@@ -160,34 +165,132 @@ create_monitoring_network() {
     fi
 }
 
-# Function to start Jaeger
-start_jaeger() {
-    print_status "Starting Jaeger All-in-One..."
+# Function to start Cassandra
+start_cassandra() {
+    print_status "Starting Cassandra..."
     
-    # Check if Jaeger container exists (running or stopped)
-    if docker ps -aq -f name=dl-creator-jaeger | grep -q .; then
-        print_warning "Jaeger container already exists, removing it first..."
-        docker stop dl-creator-jaeger >/dev/null 2>&1
-        docker rm dl-creator-jaeger >/dev/null 2>&1
+    # Check if Cassandra container exists (running or stopped)
+    if docker ps -aq -f name=dl-creator-cassandra | grep -q .; then
+        print_warning "Cassandra container already exists, removing it first..."
+        docker stop dl-creator-cassandra >/dev/null 2>&1
+        docker rm dl-creator-cassandra >/dev/null 2>&1
     fi
     
-    # Start Jaeger container
+    # Start Cassandra container
     docker run -d \
-        --name dl-creator-jaeger \
+        --name dl-creator-cassandra \
         --network dl-creator-monitoring \
-        -p 16686:16686 \
+        -p 9042:9042 \
+        -e CASSANDRA_CLUSTER_NAME=jaeger \
+        -e CASSANDRA_DC=dc1 \
+        -e CASSANDRA_RACK=rack1 \
+        -e CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch \
+        cassandra:3.11 > logs/cassandra.log 2>&1
+    
+    if [ $? -eq 0 ]; then
+        print_success "Cassandra started successfully"
+        echo "docker ps -q -f name=dl-creator-cassandra" > logs/cassandra.pid
+        
+        # Wait for Cassandra to be ready
+        print_status "Waiting for Cassandra to be ready..."
+        sleep 30
+        
+        # Check if Cassandra is responding
+        local attempt=1
+        local max_attempts=20
+        while [ $attempt -le $max_attempts ]; do
+            if docker exec dl-creator-cassandra cqlsh -e "DESCRIBE KEYSPACES;" >/dev/null 2>&1; then
+                print_success "Cassandra is ready!"
+                break
+            fi
+            echo -n "."
+            sleep 3
+            attempt=$((attempt + 1))
+        done
+        
+        if [ $attempt -gt $max_attempts ]; then
+            print_error "Cassandra failed to start within expected time"
+            exit 1
+        fi
+        
+        # Initialize Jaeger schema
+        print_status "Initializing Jaeger schema in Cassandra..."
+        docker run --rm --network dl-creator-monitoring \
+            -e CQLSH_HOST=dl-creator-cassandra \
+            -e CQLSH_PORT=9042 \
+            jaegertracing/jaeger-cassandra-schema:latest >/dev/null 2>&1
+        
+        if [ $? -eq 0 ]; then
+            print_success "Jaeger schema initialized successfully"
+        else
+            print_warning "Schema initialization may have failed, but continuing..."
+        fi
+    else
+        print_error "Failed to start Cassandra"
+        exit 1
+    fi
+}
+
+# Function to start Jaeger
+start_jaeger() {
+    print_status "Starting Jaeger with Cassandra backend..."
+    
+    # Check if Jaeger containers exist (running or stopped)
+    print_status "Cleaning up any existing Jaeger containers..."
+    docker stop dl-creator-jaeger-collector dl-creator-jaeger-query dl-creator-jaeger-agent >/dev/null 2>&1 || true
+    docker rm dl-creator-jaeger-collector dl-creator-jaeger-query dl-creator-jaeger-agent >/dev/null 2>&1 || true
+    
+    # Start Jaeger collector
+    docker run -d \
+        --name dl-creator-jaeger-collector \
+        --network dl-creator-monitoring \
         -p 14250:14250 \
         -p 14268:14268 \
         -p 4317:4317 \
         -p 4318:4318 \
+        -e SPAN_STORAGE_TYPE=cassandra \
+        -e CASSANDRA_SERVERS=dl-creator-cassandra:9042 \
+        -e CASSANDRA_KEYSPACE=jaeger_v1_dc1 \
+        -e CASSANDRA_LOCAL_DC=dc1 \
         -e COLLECTOR_OTLP_ENABLED=true \
-        jaegertracing/all-in-one:latest > logs/jaeger.log 2>&1
+        jaegertracing/jaeger-collector:latest > logs/jaeger-collector.log 2>&1
+    
+    if [ $? -ne 0 ]; then
+        print_error "Failed to start Jaeger collector"
+        exit 1
+    fi
+    
+    # Start Jaeger query
+    docker run -d \
+        --name dl-creator-jaeger-query \
+        --network dl-creator-monitoring \
+        -p 16686:16686 \
+        -e SPAN_STORAGE_TYPE=cassandra \
+        -e CASSANDRA_SERVERS=dl-creator-cassandra:9042 \
+        -e CASSANDRA_KEYSPACE=jaeger_v1_dc1 \
+        -e CASSANDRA_LOCAL_DC=dc1 \
+        jaegertracing/jaeger-query:latest > logs/jaeger-query.log 2>&1
+    
+    if [ $? -ne 0 ]; then
+        print_error "Failed to start Jaeger query"
+        exit 1
+    fi
+    
+    # Start Jaeger agent
+    docker run -d \
+        --name dl-creator-jaeger-agent \
+        --network dl-creator-monitoring \
+        -p 6831:6831/udp \
+        -p 6832:6832/udp \
+        -p 5778:5778 \
+        -e REPORTER_GRPC_HOST_PORT=dl-creator-jaeger-collector:14250 \
+        jaegertracing/jaeger-agent:latest > logs/jaeger-agent.log 2>&1
     
     if [ $? -eq 0 ]; then
-        print_success "Jaeger started successfully"
-        echo "docker ps -q -f name=dl-creator-jaeger" > logs/jaeger.pid
+        print_success "Jaeger started successfully with Cassandra backend"
+        echo "docker ps -q -f name=dl-creator-jaeger-collector" > logs/jaeger.pid
     else
-        print_error "Failed to start Jaeger"
+        print_error "Failed to start Jaeger agent"
         exit 1
     fi
 }
@@ -405,9 +508,19 @@ cleanup() {
     
     # Stop Docker containers
     if [ -f "logs/jaeger.pid" ]; then
-        docker stop dl-creator-jaeger >/dev/null 2>&1 || true
-        docker rm dl-creator-jaeger >/dev/null 2>&1 || true
+        docker stop dl-creator-jaeger-collector >/dev/null 2>&1 || true
+        docker rm dl-creator-jaeger-collector >/dev/null 2>&1 || true
+        docker stop dl-creator-jaeger-query >/dev/null 2>&1 || true
+        docker rm dl-creator-jaeger-query >/dev/null 2>&1 || true
+        docker stop dl-creator-jaeger-agent >/dev/null 2>&1 || true
+        docker rm dl-creator-jaeger-agent >/dev/null 2>&1 || true
         rm logs/jaeger.pid
+    fi
+    
+    if [ -f "logs/cassandra.pid" ]; then
+        docker stop dl-creator-cassandra >/dev/null 2>&1 || true
+        docker rm dl-creator-cassandra >/dev/null 2>&1 || true
+        rm logs/cassandra.pid
     fi
     
     if [ -f "logs/prometheus.pid" ]; then
@@ -436,6 +549,9 @@ trap cleanup SIGINT SIGTERM
 print_status "Starting DL Creator Development Environment..."
 
 create_monitoring_network
+
+start_cassandra
+sleep 10
 
 start_jaeger
 sleep 5
