@@ -191,8 +191,38 @@ services:
       - dl-creator-network
     restart: unless-stopped
 
+  # Loki - Log Aggregation System
+  loki-dev:
+    image: grafana/loki:2.9.0
+    container_name: dl-creator-loki-dev
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki-config.yml:/etc/loki/local-config.yaml
+      - loki_dev_data:/loki
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+
+  # Promtail - Log Shipper
+  promtail-dev:
+    image: grafana/promtail:2.9.0
+    container_name: dl-creator-promtail-dev
+    volumes:
+      - ./promtail-config.yml:/etc/promtail/config.yml
+      - ./logs:/var/log
+      - /var/log:/var/log/host:ro
+    command: -config.file=/etc/promtail/config.yml
+    depends_on:
+      - loki-dev
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+
 volumes:
   cassandra_dev_data:
+  loki_dev_data:
 
 networks:
   dl-creator-network:

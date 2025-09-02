@@ -152,6 +152,11 @@ if port_in_use 9042; then
     exit 1
 fi
 
+if port_in_use 3100; then
+    print_error "Port 3100 is already in use. Please free up the port."
+    exit 1
+fi
+
 print_success "All required ports are available!"
 
 # Create logs directory
@@ -362,6 +367,67 @@ start_grafana() {
     fi
 }
 
+# Function to start Loki
+start_loki() {
+    print_status "Starting Loki..."
+    
+    # Check if Loki container exists (running or stopped)
+    if docker ps -aq -f name=dl-creator-loki | grep -q .; then
+        print_warning "Loki container already exists, removing it first..."
+        docker stop dl-creator-loki >/dev/null 2>&1
+        docker rm dl-creator-loki >/dev/null 2>&1
+    fi
+    
+    # Start Loki container
+    docker run -d \
+        --name dl-creator-loki \
+        --network dl-creator-monitoring \
+        -p 3100:3100 \
+        -v "$(pwd)/loki-config.yml:/etc/loki/local-config.yaml" \
+        -v "loki_data:/loki" \
+        grafana/loki:2.9.0 \
+        -config.file=/etc/loki/local-config.yaml > logs/loki.log 2>&1
+    
+    if [ $? -eq 0 ]; then
+        print_success "Loki started successfully"
+        echo "docker ps -q -f name=dl-creator-loki" > logs/loki.pid
+    else
+        print_error "Failed to start Loki"
+        exit 1
+    fi
+}
+
+# Function to start Promtail
+start_promtail() {
+    print_status "Starting Promtail..."
+    
+    # Check if Promtail container exists (running or stopped)
+    if docker ps -aq -f name=dl-creator-promtail | grep -q .; then
+        print_warning "Promtail container already exists, removing it first..."
+        docker stop dl-creator-promtail >/dev/null 2>&1
+        docker rm dl-creator-promtail >/dev/null 2>&1
+    fi
+    
+    # Start Promtail container
+    docker run -d \
+        --name dl-creator-promtail \
+        --network dl-creator-monitoring \
+        -p 9080:9080 \
+        -v "$(pwd)/promtail-config.yml:/etc/promtail/config.yml" \
+        -v "$(pwd)/logs:/var/log" \
+        -v "/var/log:/var/log/host:ro" \
+        grafana/promtail:2.9.0 \
+        -config.file=/etc/promtail/config.yml > logs/promtail.log 2>&1
+    
+    if [ $? -eq 0 ]; then
+        print_success "Promtail started successfully"
+        echo "docker ps -q -f name=dl-creator-promtail" > logs/promtail.pid
+    else
+        print_error "Failed to start Promtail"
+        exit 1
+    fi
+}
+
 # Function to start backend
 start_backend() {
     print_status "Starting Spring Boot Backend..."
@@ -535,6 +601,18 @@ cleanup() {
         rm logs/grafana.pid
     fi
     
+    if [ -f "logs/loki.pid" ]; then
+        docker stop dl-creator-loki >/dev/null 2>&1 || true
+        docker rm dl-creator-loki >/dev/null 2>&1 || true
+        rm logs/loki.pid
+    fi
+    
+    if [ -f "logs/promtail.pid" ]; then
+        docker stop dl-creator-promtail >/dev/null 2>&1 || true
+        docker rm dl-creator-promtail >/dev/null 2>&1 || true
+        rm logs/promtail.pid
+    fi
+    
     # Clean up Docker network
     docker network rm dl-creator-monitoring >/dev/null 2>&1 || true
     
@@ -561,6 +639,12 @@ sleep 5
 
 start_grafana
 sleep 10
+
+start_loki
+sleep 5
+
+start_promtail
+sleep 5
 
 start_backend
 sleep 5
@@ -593,6 +677,7 @@ echo "  Rasa Action Server: http://localhost:5055"
 echo "  Jaeger UI: http://localhost:16686"
 echo "  Prometheus: http://localhost:9090"
 echo "  Grafana: http://localhost:3001 (admin/admin123)"
+echo "  Loki: http://localhost:3100"
 
 print_status "Press Ctrl+C to stop all services"
 

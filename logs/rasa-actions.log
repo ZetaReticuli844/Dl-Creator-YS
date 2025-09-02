@@ -10,29 +10,29 @@ Implementing implicit namespace packages (as specified in PEP 420) is preferred 
   declare_namespace(pkg)
 /Users/yogeshshekhawat/assignment/chatbot/rasa_env/lib/python3.10/site-packages/sanic_cors/extension.py:39: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
   SANIC_VERSION = LooseVersion(sanic_version)
-2025-09-01 23:26:27 INFO     rasa_sdk.endpoint  - Starting action endpoint server...
-2025-09-01 23:26:28 INFO     rasa_sdk.executor  - Registered function for 'action_session_started'.
-2025-09-01 23:26:28 INFO     rasa_sdk.executor  - Registered function for 'action_reset_authentication'.
-2025-09-01 23:26:28 INFO     rasa_sdk.executor  - Registered function for 'action_validate_license'.
-2025-09-01 23:26:28 INFO     rasa_sdk.executor  - Registered function for 'action_authenticate_user'.
-2025-09-01 23:26:28 INFO     rasa_sdk.executor  - Registered function for 'action_check_license_status'.
-2025-09-01 23:26:28 INFO     rasa_sdk.executor  - Registered function for 'action_view_license_info'.
-2025-09-01 23:26:28 INFO     rasa_sdk.executor  - Registered function for 'action_renew_license'.
-2025-09-01 23:26:28 INFO     rasa_sdk.executor  - Registered function for 'action_request_duplicate'.
-2025-09-01 23:26:28 INFO     rasa_sdk.executor  - Registered function for 'action_add_vehicle_type'.
-2025-09-01 23:26:28 INFO     rasa_sdk.executor  - Registered function for 'action_remove_vehicle_type'.
-2025-09-01 23:26:28 INFO     rasa_sdk.executor  - Registered function for 'action_change_address'.
-2025-09-01 23:26:28 INFO     rasa_sdk.executor  - Registered function for 'action_change_contact'.
-2025-09-01 23:26:28 INFO     rasa_sdk.executor  - Registered function for 'action_change_vehicle'.
-2025-09-01 23:26:28 INFO     rasa_sdk.executor  - Registered function for 'action_validate_vehicle_slots'.
-2025-09-01 23:26:28 INFO     rasa_sdk.executor  - Registered function for 'action_update_license_status'.
-2025-09-01 23:26:28 INFO     rasa_sdk.executor  - Registered function for 'action_license_not_received'.
-2025-09-01 23:26:28 INFO     rasa_sdk.executor  - Registered function for 'action_fallback'.
-2025-09-01 23:26:28 INFO     rasa_sdk.executor  - Registered function for 'action_gpt_fallback'.
-2025-09-01 23:26:28 INFO     rasa_sdk.executor  - Registered function for 'action_gpt_query'.
-2025-09-01 23:26:28 INFO     rasa_sdk.endpoint  - Starting plugins...
-2025-09-01 23:26:28 INFO     rasa_sdk.endpoint  - Action endpoint is up and running on http://0.0.0.0:5055
-2025-09-01 23:26:31 ERROR    rasa_sdk.endpoint  - Exception occurred during execution of request <Request: GET />
+2025-09-03 04:32:58 INFO     rasa_sdk.endpoint  - Starting action endpoint server...
+2025-09-03 04:32:59 INFO     rasa_sdk.executor  - Registered function for 'action_session_started'.
+2025-09-03 04:32:59 INFO     rasa_sdk.executor  - Registered function for 'action_reset_authentication'.
+2025-09-03 04:32:59 INFO     rasa_sdk.executor  - Registered function for 'action_validate_license'.
+2025-09-03 04:32:59 INFO     rasa_sdk.executor  - Registered function for 'action_authenticate_user'.
+2025-09-03 04:32:59 INFO     rasa_sdk.executor  - Registered function for 'action_check_license_status'.
+2025-09-03 04:32:59 INFO     rasa_sdk.executor  - Registered function for 'action_view_license_info'.
+2025-09-03 04:32:59 INFO     rasa_sdk.executor  - Registered function for 'action_renew_license'.
+2025-09-03 04:32:59 INFO     rasa_sdk.executor  - Registered function for 'action_request_duplicate'.
+2025-09-03 04:32:59 INFO     rasa_sdk.executor  - Registered function for 'action_add_vehicle_type'.
+2025-09-03 04:32:59 INFO     rasa_sdk.executor  - Registered function for 'action_remove_vehicle_type'.
+2025-09-03 04:32:59 INFO     rasa_sdk.executor  - Registered function for 'action_change_address'.
+2025-09-03 04:32:59 INFO     rasa_sdk.executor  - Registered function for 'action_change_contact'.
+2025-09-03 04:32:59 INFO     rasa_sdk.executor  - Registered function for 'action_change_vehicle'.
+2025-09-03 04:32:59 INFO     rasa_sdk.executor  - Registered function for 'action_validate_vehicle_slots'.
+2025-09-03 04:32:59 INFO     rasa_sdk.executor  - Registered function for 'action_update_license_status'.
+2025-09-03 04:32:59 INFO     rasa_sdk.executor  - Registered function for 'action_license_not_received'.
+2025-09-03 04:32:59 INFO     rasa_sdk.executor  - Registered function for 'action_fallback'.
+2025-09-03 04:32:59 INFO     rasa_sdk.executor  - Registered function for 'action_gpt_fallback'.
+2025-09-03 04:32:59 INFO     rasa_sdk.executor  - Registered function for 'action_gpt_query'.
+2025-09-03 04:32:59 INFO     rasa_sdk.endpoint  - Starting plugins...
+2025-09-03 04:32:59 INFO     rasa_sdk.endpoint  - Action endpoint is up and running on http://0.0.0.0:5055
+2025-09-03 04:33:01 ERROR    rasa_sdk.endpoint  - Exception occurred during execution of request <Request: GET />
 Traceback (most recent call last):
   File "/Users/yogeshshekhawat/assignment/chatbot/rasa_env/lib/python3.10/site-packages/sanic_routing/router.py", line 79, in resolve
     route, param_basket = self.find_route(
@@ -68,4 +68,3 @@ Traceback (most recent call last):
   File "/Users/yogeshshekhawat/assignment/chatbot/rasa_env/lib/python3.10/site-packages/sanic/router.py", line 44, in _get
     raise NotFound("Requested URL {} not found".format(e.path))
 sanic.exceptions.NotFound: Requested URL  not found
-✅ OpenTelemetry configured successfully for endpoint: http://localhost:4317
