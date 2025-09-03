@@ -69,16 +69,25 @@ scrape_configs:
         labels:
           job: dl-creator-rasa-server
           service: rasa
-          __path__: /var/log/rasa/*.log
+          __path__: /var/log/rasa-server.log
     pipeline_stages:
-      - regex:
-          expression: '^(?P<timestamp>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}) - (?P<logger>\S+) - (?P<level>\w+) - (?P<message>.*)'
+      - json:
+          expressions:
+            timestamp: timestamp
+            level: level
+            logger: logger
+            message: message
+            module: module
+            function: function
+            line: line
       - timestamp:
           source: timestamp
-          format: '2006-01-02 15:04:05,000'
+          format: '2006-01-02 15:04:05'
       - labels:
           level:
           logger:
+          module:
+          function:
       - output:
           source: message
 
@@ -89,14 +98,19 @@ scrape_configs:
         labels:
           job: dl-creator-frontend
           service: frontend
-          __path__: /var/log/frontend/*.log
+          __path__: /var/log/frontend.log
     pipeline_stages:
-      - regex:
-          expression: '^(?P<timestamp>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z) (?P<level>\w+) (?P<message>.*)'
+      - json:
+          expressions:
+            timestamp: timestamp
+            level: level
+            service: service
+            message: message
       - timestamp:
           source: timestamp
           format: RFC3339
       - labels:
           level:
+          service:
       - output:
           source: message

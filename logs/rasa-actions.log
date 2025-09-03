@@ -68,3 +68,4 @@ Traceback (most recent call last):
   File "/Users/yogeshshekhawat/assignment/chatbot/rasa_env/lib/python3.10/site-packages/sanic/router.py", line 44, in _get
     raise NotFound("Requested URL {} not found".format(e.path))
 sanic.exceptions.NotFound: Requested URL  not found
+✅ OpenTelemetry configured successfully for endpoint: http://localhost:4317
