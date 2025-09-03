@@ -41,3 +41,41 @@ policies:
     max_history: 5
     epochs: 100
     constrain_similarities: true
+
+# Logging configuration
+logging:
+  version: 1
+  disable_existing_loggers: false
+  formatters:
+    json:
+      format: '{"timestamp": "%(asctime)s", "level": "%(levelname)s", "logger": "%(name)s", "message": "%(message)s", "module": "%(module)s", "function": "%(funcName)s", "line": %(lineno)d}'
+      datefmt: '%Y-%m-%d %H:%M:%S'
+    standard:
+      format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+      datefmt: '%Y-%m-%d %H:%M:%S'
+  handlers:
+    file:
+      class: logging.FileHandler
+      filename: ../logs/rasa-server.log
+      formatter: json
+      level: INFO
+    console:
+      class: logging.StreamHandler
+      formatter: standard
+      level: INFO
+  loggers:
+    rasa:
+      level: INFO
+      handlers: [file, console]
+      propagate: false
+    rasa.core:
+      level: INFO
+      handlers: [file, console]
+      propagate: false
+    rasa.nlu:
+      level: INFO
+      handlers: [file, console]
+      propagate: false
+  root:
+    level: INFO
+    handlers: [file, console]

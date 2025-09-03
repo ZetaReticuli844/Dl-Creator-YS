@@ -35,7 +35,7 @@ public class WebSecurityConfig {
                 .headers(headers -> headers.frameOptions().disable()) // Required for H2 console
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/user/createUser", "/h2-console/**").permitAll()
+                        .requestMatchers("/auth/**", "/user/createUser", "/h2-console/**",  "/actuator/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

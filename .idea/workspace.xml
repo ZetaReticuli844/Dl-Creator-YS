@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="fbd407a9-158a-48d4-811e-932604f3bd23" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/backend/dl_creator/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/dl_creator/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/dl_creator/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/dl_creator/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/dl_creator/prometheus.yml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/dl_creator/prometheus.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/dl_creator/src/main/java/com/dlyog/dl_creator/Auth/controller/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/dl_creator/src/main/java/com/dlyog/dl_creator/Auth/controller/AuthenticationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/dl_creator/src/main/java/com/dlyog/dl_creator/Auth/service/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/dl_creator/src/main/java/com/dlyog/dl_creator/Auth/service/AuthenticationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/dl_creator/src/main/java/com/dlyog/dl_creator/Auth/service/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/dl_creator/src/main/java/com/dlyog/dl_creator/Auth/service/JwtService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/dl_creator/src/main/java/com/dlyog/dl_creator/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/dl_creator/src/main/java/com/dlyog/dl_creator/config/WebSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/dl_creator/src/main/java/com/dlyog/dl_creator/controller/DrivingLicenseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/dl_creator/src/main/java/com/dlyog/dl_creator/controller/DrivingLicenseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/dl_creator/src/main/java/com/dlyog/dl_creator/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/dl_creator/src/main/java/com/dlyog/dl_creator/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/dl_creator/src/main/java/com/dlyog/dl_creator/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/dl_creator/src/main/java/com/dlyog/dl_creator/service/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/dl_creator/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/dl_creator/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dev-start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/dev-start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/backend.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/backend.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/backend.pid" beforeDir="false" afterPath="$PROJECT_DIR$/logs/backend.pid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/frontend.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/frontend.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/frontend.pid" beforeDir="false" afterPath="$PROJECT_DIR$/logs/frontend.pid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/jaeger.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/jaeger.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/rasa-actions.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/rasa-actions.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/rasa-actions.pid" beforeDir="false" afterPath="$PROJECT_DIR$/logs/rasa-actions.pid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/rasa-server.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/rasa-server.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/rasa-server.pid" beforeDir="false" afterPath="$PROJECT_DIR$/logs/rasa-server.pid" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "ZetaReticuli844"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/ZetaReticuli844/Dl-Creator-YS.git",
+    "accountId": "f368dfda-77cf-436e-91eb-8f3601cf61e3"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="31zaAyUoLflRNZ7DJpYaYEytNZs" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "#1 on LLM__Integration",
+    "kotlin-language-version-configured": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="assignment" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="assignment" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="assignment" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <module name="assignment" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fbd407a9-158a-48d4-811e-932604f3bd23" name="Changes" comment="" />
+      <created>1756529215455</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1756529215455</updated>
+    </task>
+    <servers />
+  </component>
+</project>

@@ -137,38 +137,293 @@ if port_in_use 4317; then
     exit 1
 fi
 
+if port_in_use 9090; then
+    print_error "Port 9090 is already in use. Please free up the port."
+    exit 1
+fi
+
+if port_in_use 3001; then
+    print_error "Port 3001 is already in use. Please free up the port."
+    exit 1
+fi
+
+if port_in_use 9042; then
+    print_error "Port 9042 is already in use. Please free up the port."
+    exit 1
+fi
+
+if port_in_use 3100; then
+    print_error "Port 3100 is already in use. Please free up the port."
+    exit 1
+fi
+
 print_success "All required ports are available!"
 
 # Create logs directory
 mkdir -p logs
 
-# Function to start Jaeger
-start_jaeger() {
-    print_status "Starting Jaeger All-in-One..."
+# Create Docker network for monitoring
+create_monitoring_network() {
+    if ! docker network ls | grep -q "dl-creator-monitoring"; then
+        print_status "Creating Docker network for monitoring..."
+        docker network create dl-creator-monitoring >/dev/null 2>&1
+    fi
+}
+
+# Function to start Cassandra
+start_cassandra() {
+    print_status "Starting Cassandra..."
     
-    # Check if Jaeger container is already running
-    if docker ps -q -f name=dl-creator-jaeger | grep -q .; then
-        print_warning "Jaeger container is already running, stopping it first..."
-        docker stop dl-creator-jaeger >/dev/null 2>&1
-        docker rm dl-creator-jaeger >/dev/null 2>&1
+    # Check if Cassandra container exists (running or stopped)
+    if docker ps -aq -f name=dl-creator-cassandra | grep -q .; then
+        print_warning "Cassandra container already exists, removing it first..."
+        docker stop dl-creator-cassandra >/dev/null 2>&1
+        docker rm dl-creator-cassandra >/dev/null 2>&1
     fi
     
-    # Start Jaeger container
+    # Start Cassandra container
     docker run -d \
-        --name dl-creator-jaeger \
-        -p 16686:16686 \
+        --name dl-creator-cassandra \
+        --network dl-creator-monitoring \
+        -p 9042:9042 \
+        -e CASSANDRA_CLUSTER_NAME=jaeger \
+        -e CASSANDRA_DC=dc1 \
+        -e CASSANDRA_RACK=rack1 \
+        -e CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch \
+        cassandra:3.11 > logs/cassandra.log 2>&1
+    
+    if [ $? -eq 0 ]; then
+        print_success "Cassandra started successfully"
+        echo "docker ps -q -f name=dl-creator-cassandra" > logs/cassandra.pid
+        
+        # Wait for Cassandra to be ready
+        print_status "Waiting for Cassandra to be ready..."
+        sleep 30
+        
+        # Check if Cassandra is responding
+        local attempt=1
+        local max_attempts=20
+        while [ $attempt -le $max_attempts ]; do
+            if docker exec dl-creator-cassandra cqlsh -e "DESCRIBE KEYSPACES;" >/dev/null 2>&1; then
+                print_success "Cassandra is ready!"
+                break
+            fi
+            echo -n "."
+            sleep 3
+            attempt=$((attempt + 1))
+        done
+        
+        if [ $attempt -gt $max_attempts ]; then
+            print_error "Cassandra failed to start within expected time"
+            exit 1
+        fi
+        
+        # Initialize Jaeger schema
+        print_status "Initializing Jaeger schema in Cassandra..."
+        docker run --rm --network dl-creator-monitoring \
+            -e CQLSH_HOST=dl-creator-cassandra \
+            -e CQLSH_PORT=9042 \
+            jaegertracing/jaeger-cassandra-schema:latest >/dev/null 2>&1
+        
+        if [ $? -eq 0 ]; then
+            print_success "Jaeger schema initialized successfully"
+        else
+            print_warning "Schema initialization may have failed, but continuing..."
+        fi
+    else
+        print_error "Failed to start Cassandra"
+        exit 1
+    fi
+}
+
+# Function to start Jaeger
+start_jaeger() {
+    print_status "Starting Jaeger with Cassandra backend..."
+    
+    # Check if Jaeger containers exist (running or stopped)
+    print_status "Cleaning up any existing Jaeger containers..."
+    docker stop dl-creator-jaeger-collector dl-creator-jaeger-query dl-creator-jaeger-agent >/dev/null 2>&1 || true
+    docker rm dl-creator-jaeger-collector dl-creator-jaeger-query dl-creator-jaeger-agent >/dev/null 2>&1 || true
+    
+    # Start Jaeger collector
+    docker run -d \
+        --name dl-creator-jaeger-collector \
+        --network dl-creator-monitoring \
         -p 14250:14250 \
         -p 14268:14268 \
         -p 4317:4317 \
         -p 4318:4318 \
+        -e SPAN_STORAGE_TYPE=cassandra \
+        -e CASSANDRA_SERVERS=dl-creator-cassandra:9042 \
+        -e CASSANDRA_KEYSPACE=jaeger_v1_dc1 \
+        -e CASSANDRA_LOCAL_DC=dc1 \
         -e COLLECTOR_OTLP_ENABLED=true \
-        jaegertracing/all-in-one:latest > logs/jaeger.log 2>&1
+        jaegertracing/jaeger-collector:latest > logs/jaeger-collector.log 2>&1
+    
+    if [ $? -ne 0 ]; then
+        print_error "Failed to start Jaeger collector"
+        exit 1
+    fi
+    
+    # Start Jaeger query
+    docker run -d \
+        --name dl-creator-jaeger-query \
+        --network dl-creator-monitoring \
+        -p 16686:16686 \
+        -e SPAN_STORAGE_TYPE=cassandra \
+        -e CASSANDRA_SERVERS=dl-creator-cassandra:9042 \
+        -e CASSANDRA_KEYSPACE=jaeger_v1_dc1 \
+        -e CASSANDRA_LOCAL_DC=dc1 \
+        jaegertracing/jaeger-query:latest > logs/jaeger-query.log 2>&1
+    
+    if [ $? -ne 0 ]; then
+        print_error "Failed to start Jaeger query"
+        exit 1
+    fi
+    
+    # Start Jaeger agent
+    docker run -d \
+        --name dl-creator-jaeger-agent \
+        --network dl-creator-monitoring \
+        -p 6831:6831/udp \
+        -p 6832:6832/udp \
+        -p 5778:5778 \
+        -e REPORTER_GRPC_HOST_PORT=dl-creator-jaeger-collector:14250 \
+        jaegertracing/jaeger-agent:latest > logs/jaeger-agent.log 2>&1
     
     if [ $? -eq 0 ]; then
-        print_success "Jaeger started successfully"
-        echo "docker ps -q -f name=dl-creator-jaeger" > logs/jaeger.pid
+        print_success "Jaeger started successfully with Cassandra backend"
+        echo "docker ps -q -f name=dl-creator-jaeger-collector" > logs/jaeger.pid
     else
-        print_error "Failed to start Jaeger"
+        print_error "Failed to start Jaeger agent"
+        exit 1
+    fi
+}
+
+# Function to start Prometheus
+start_prometheus() {
+    print_status "Starting Prometheus..."
+    
+    # Check if Prometheus container exists (running or stopped)
+    if docker ps -aq -f name=dl-creator-prometheus | grep -q .; then
+        print_warning "Prometheus container already exists, removing it first..."
+        docker stop dl-creator-prometheus >/dev/null 2>&1
+        docker rm dl-creator-prometheus >/dev/null 2>&1
+    fi
+    
+    # Start Prometheus container
+    docker run -d \
+        --name dl-creator-prometheus \
+        --network dl-creator-monitoring \
+        -p 9090:9090 \
+        --add-host=host.docker.internal:host-gateway \
+        -v "$(pwd)/backend/dl_creator/prometheus.yml:/etc/prometheus/prometheus.yml" \
+        prom/prometheus:latest \
+        --config.file=/etc/prometheus/prometheus.yml \
+        --storage.tsdb.path=/prometheus \
+        --web.console.libraries=/etc/prometheus/console_libraries \
+        --web.console.templates=/etc/prometheus/consoles \
+        --storage.tsdb.retention.time=15d \
+        --web.enable-lifecycle > logs/prometheus.log 2>&1
+    
+    if [ $? -eq 0 ]; then
+        print_success "Prometheus started successfully"
+        echo "docker ps -q -f name=dl-creator-prometheus" > logs/prometheus.pid
+    else
+        print_error "Failed to start Prometheus"
+        exit 1
+    fi
+}
+
+# Function to start Grafana
+start_grafana() {
+    print_status "Starting Grafana..."
+    
+    # Check if Grafana container exists (running or stopped)
+    if docker ps -aq -f name=dl-creator-grafana | grep -q .; then
+        print_warning "Grafana container already exists, removing it first..."
+        docker stop dl-creator-grafana >/dev/null 2>&1
+        docker rm dl-creator-grafana >/dev/null 2>&1
+    fi
+    
+    # Start Grafana container
+    docker run -d \
+        --name dl-creator-grafana \
+        --network dl-creator-monitoring \
+        -p 3001:3000 \
+        -e GF_SECURITY_ADMIN_USER=admin \
+        -e GF_SECURITY_ADMIN_PASSWORD=admin123 \
+        -e GF_USERS_ALLOW_SIGN_UP=false \
+        -v "$(pwd)/backend/dl_creator/grafana/provisioning:/etc/grafana/provisioning" \
+        -v "$(pwd)/backend/dl_creator/grafana/dashboards:/var/lib/grafana/dashboards" \
+        grafana/grafana:latest > logs/grafana.log 2>&1
+    
+    if [ $? -eq 0 ]; then
+        print_success "Grafana started successfully"
+        echo "docker ps -q -f name=dl-creator-grafana" > logs/grafana.pid
+    else
+        print_error "Failed to start Grafana"
+        exit 1
+    fi
+}
+
+# Function to start Loki
+start_loki() {
+    print_status "Starting Loki..."
+    
+    # Check if Loki container exists (running or stopped)
+    if docker ps -aq -f name=dl-creator-loki | grep -q .; then
+        print_warning "Loki container already exists, removing it first..."
+        docker stop dl-creator-loki >/dev/null 2>&1
+        docker rm dl-creator-loki >/dev/null 2>&1
+    fi
+    
+    # Start Loki container
+    docker run -d \
+        --name dl-creator-loki \
+        --network dl-creator-monitoring \
+        -p 3100:3100 \
+        -v "$(pwd)/loki-config.yml:/etc/loki/local-config.yaml" \
+        -v "loki_data:/loki" \
+        grafana/loki:2.9.0 \
+        -config.file=/etc/loki/local-config.yaml > logs/loki.log 2>&1
+    
+    if [ $? -eq 0 ]; then
+        print_success "Loki started successfully"
+        echo "docker ps -q -f name=dl-creator-loki" > logs/loki.pid
+    else
+        print_error "Failed to start Loki"
+        exit 1
+    fi
+}
+
+# Function to start Promtail
+start_promtail() {
+    print_status "Starting Promtail..."
+    
+    # Check if Promtail container exists (running or stopped)
+    if docker ps -aq -f name=dl-creator-promtail | grep -q .; then
+        print_warning "Promtail container already exists, removing it first..."
+        docker stop dl-creator-promtail >/dev/null 2>&1
+        docker rm dl-creator-promtail >/dev/null 2>&1
+    fi
+    
+    # Start Promtail container
+    docker run -d \
+        --name dl-creator-promtail \
+        --network dl-creator-monitoring \
+        -p 9080:9080 \
+        -v "$(pwd)/promtail-config.yml:/etc/promtail/config.yml" \
+        -v "$(pwd)/logs:/var/log" \
+        -v "/var/log:/var/log/host:ro" \
+        grafana/promtail:2.9.0 \
+        -config.file=/etc/promtail/config.yml > logs/promtail.log 2>&1
+    
+    if [ $? -eq 0 ]; then
+        print_success "Promtail started successfully"
+        echo "docker ps -q -f name=dl-creator-promtail" > logs/promtail.pid
+    else
+        print_error "Failed to start Promtail"
         exit 1
     fi
 }
@@ -216,6 +471,8 @@ start_backend() {
     nohup java -javaagent:opentelemetry-javaagent.jar \
         -Dotel.service.name=dl-creator-backend \
         -Dotel.traces.exporter=otlp \
+        -Dotel.metrics.exporter=none \
+        -Dotel.logs.exporter=none \
         -Dotel.exporter.otlp.endpoint=http://localhost:4317 \
         -Dotel.exporter.otlp.protocol=grpc \
         -Dotel.traces.sampler=always_on \
@@ -315,12 +572,49 @@ cleanup() {
         rm logs/rasa-server.pid
     fi
     
-    # Stop Jaeger container
+    # Stop Docker containers
     if [ -f "logs/jaeger.pid" ]; then
-        docker stop dl-creator-jaeger >/dev/null 2>&1 || true
-        docker rm dl-creator-jaeger >/dev/null 2>&1 || true
+        docker stop dl-creator-jaeger-collector >/dev/null 2>&1 || true
+        docker rm dl-creator-jaeger-collector >/dev/null 2>&1 || true
+        docker stop dl-creator-jaeger-query >/dev/null 2>&1 || true
+        docker rm dl-creator-jaeger-query >/dev/null 2>&1 || true
+        docker stop dl-creator-jaeger-agent >/dev/null 2>&1 || true
+        docker rm dl-creator-jaeger-agent >/dev/null 2>&1 || true
         rm logs/jaeger.pid
     fi
+    
+    if [ -f "logs/cassandra.pid" ]; then
+        docker stop dl-creator-cassandra >/dev/null 2>&1 || true
+        docker rm dl-creator-cassandra >/dev/null 2>&1 || true
+        rm logs/cassandra.pid
+    fi
+    
+    if [ -f "logs/prometheus.pid" ]; then
+        docker stop dl-creator-prometheus >/dev/null 2>&1 || true
+        docker rm dl-creator-prometheus >/dev/null 2>&1 || true
+        rm logs/prometheus.pid
+    fi
+    
+    if [ -f "logs/grafana.pid" ]; then
+        docker stop dl-creator-grafana >/dev/null 2>&1 || true
+        docker rm dl-creator-grafana >/dev/null 2>&1 || true
+        rm logs/grafana.pid
+    fi
+    
+    if [ -f "logs/loki.pid" ]; then
+        docker stop dl-creator-loki >/dev/null 2>&1 || true
+        docker rm dl-creator-loki >/dev/null 2>&1 || true
+        rm logs/loki.pid
+    fi
+    
+    if [ -f "logs/promtail.pid" ]; then
+        docker stop dl-creator-promtail >/dev/null 2>&1 || true
+        docker rm dl-creator-promtail >/dev/null 2>&1 || true
+        rm logs/promtail.pid
+    fi
+    
+    # Clean up Docker network
+    docker network rm dl-creator-monitoring >/dev/null 2>&1 || true
     
     print_success "All services stopped."
     exit 0
@@ -332,7 +626,24 @@ trap cleanup SIGINT SIGTERM
 # Start all services
 print_status "Starting DL Creator Development Environment..."
 
+create_monitoring_network
+
+start_cassandra
+sleep 10
+
 start_jaeger
+sleep 5
+
+start_prometheus
+sleep 5
+
+start_grafana
+sleep 10
+
+start_loki
+sleep 5
+
+start_promtail
 sleep 5
 
 start_backend
@@ -350,6 +661,8 @@ wait_for_service "localhost" 7500 "Backend API" &
 wait_for_service "localhost" 5005 "Rasa Server" &
 wait_for_service "localhost" 5055 "Rasa Action Server" &
 wait_for_service "localhost" 3000 "Frontend" &
+wait_for_service "localhost" 9090 "Prometheus" &
+wait_for_service "localhost" 3001 "Grafana" &
 
 # Wait for all background processes
 wait
@@ -362,6 +675,9 @@ echo "  H2 Console: http://localhost:7500/h2-console"
 echo "  Rasa Server: http://localhost:5005"
 echo "  Rasa Action Server: http://localhost:5055"
 echo "  Jaeger UI: http://localhost:16686"
+echo "  Prometheus: http://localhost:9090"
+echo "  Grafana: http://localhost:3001 (admin/admin123)"
+echo "  Loki: http://localhost:3100"
 
 print_status "Press Ctrl+C to stop all services"
 

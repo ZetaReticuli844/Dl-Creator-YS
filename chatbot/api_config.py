@@ -22,6 +22,7 @@ class APIConfig:
         "update_license_status": "/drivingLicense/updateStatus",
         "change_address": "/drivingLicense/changeAddress",
         "renew_license": "/drivingLicense/renewLicense",
+        "change_vehicle": "/drivingLicense/changeVehicle", 
     }
     
 

@@ -3,6 +3,7 @@ package com.dlyog.dl_creator.Auth.service;
 
 import com.dlyog.dl_creator.Auth.dto.LoginUserDto;
 import com.dlyog.dl_creator.Auth.dto.RegisterUserDto;
+import com.dlyog.dl_creator.TraceStuff;
 import com.dlyog.dl_creator.model.User;
 import com.dlyog.dl_creator.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -39,6 +40,7 @@ public class AuthenticationService {
         return userRepository.save(user);
     }
 
+    @TraceStuff("authenticateService")
     public User authenticate(LoginUserDto input) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(

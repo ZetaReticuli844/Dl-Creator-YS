@@ -1,9 +1,10 @@
 Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
-[otel.javaagent 2025-08-29 04:03:53:517 +0530] [main] INFO io.opentelemetry.javaagent.tooling.VersionLogger - opentelemetry-javaagent - version: 2.19.0
+[otel.javaagent 2025-09-03 16:59:31:813 +0530] [main] INFO io.opentelemetry.javaagent.tooling.VersionLogger - opentelemetry-javaagent - version: 2.19.0
 WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
 WARNING: sun.misc.Unsafe::objectFieldOffset has been called by net.bytebuddy.dynamic.loading.ClassInjector$UsingUnsafe$Dispatcher$CreationAction (file:/Users/yogeshshekhawat/assignment/backend/dl_creator/opentelemetry-javaagent.jar)
 WARNING: Please consider reporting this to the maintainers of class net.bytebuddy.dynamic.loading.ClassInjector$UsingUnsafe$Dispatcher$CreationAction
 WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+16:59:33,904 |-WARN in ch.qos.logback.core.model.processor.AppenderModelHandler - Appender named [CONSOLE_DEV] not referenced. Skipping further processing.
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -14,37 +15,181 @@ WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
 
  :: Spring Boot ::                (v3.5.4)
 
-2025-08-29T04:03:55.565+05:30  INFO 80102 --- [dl_creator] [           main] c.dlyog.dl_creator.DlCreatorApplication  : Starting DlCreatorApplication v0.0.1-SNAPSHOT using Java 24.0.1 with PID 80102 (/Users/yogeshshekhawat/assignment/backend/dl_creator/target/dl_creator-0.0.1-SNAPSHOT.jar started by yogeshshekhawat in /Users/yogeshshekhawat/assignment/backend/dl_creator)
-2025-08-29T04:03:55.575+05:30  INFO 80102 --- [dl_creator] [           main] c.dlyog.dl_creator.DlCreatorApplication  : No active profile set, falling back to 1 default profile: "default"
-2025-08-29T04:03:56.201+05:30  INFO 80102 --- [dl_creator] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-[otel.javaagent 2025-08-29 04:03:56:239 +0530] [OkHttp http://localhost:4317/...] ERROR io.opentelemetry.exporter.internal.grpc.GrpcExporter - Failed to export logs. Server responded with UNIMPLEMENTED. This usually means that your collector is not configured with an otlp receiver in the "pipelines" section of the configuration. If export is not desired and you are using OpenTelemetry autoconfiguration or the javaagent, disable export by setting OTEL_LOGS_EXPORTER=none. Full error message: unknown service opentelemetry.proto.collector.logs.v1.LogsService
-2025-08-29T04:03:56.250+05:30  INFO 80102 --- [dl_creator] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 35 ms. Found 3 JPA repository interfaces.
-2025-08-29T04:03:56.765+05:30  INFO 80102 --- [dl_creator] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 7500 (http)
-2025-08-29T04:03:56.782+05:30  INFO 80102 --- [dl_creator] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2025-08-29T04:03:56.782+05:30  INFO 80102 --- [dl_creator] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.43]
-2025-08-29T04:03:56.831+05:30  INFO 80102 --- [dl_creator] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2025-08-29T04:03:56.831+05:30  INFO 80102 --- [dl_creator] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1212 ms
-2025-08-29T04:03:57.026+05:30  INFO 80102 --- [dl_creator] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-08-29T04:03:57.104+05:30  INFO 80102 --- [dl_creator] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.22.Final
-2025-08-29T04:03:57.135+05:30  INFO 80102 --- [dl_creator] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2025-08-29T04:03:57.463+05:30  INFO 80102 --- [dl_creator] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-08-29T04:03:57.491+05:30  INFO 80102 --- [dl_creator] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2025-08-29T04:03:57.673+05:30  INFO 80102 --- [dl_creator] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:dl_creator_db user=SA
-2025-08-29T04:03:57.687+05:30  INFO 80102 --- [dl_creator] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-08-29T04:03:57.715+05:30  WARN 80102 --- [dl_creator] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-08-29T04:03:57.736+05:30  INFO 80102 --- [dl_creator] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
-	Database driver: undefined/unknown
-	Database version: 2.3.232
-	Autocommit mode: undefined/unknown
-	Isolation level: undefined/unknown
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
+{"@timestamp":"2025-09-03T11:29:33.972Z","level":"INFO","logger_name":"org.hibernate.validator.internal.util.Version","message":"HV000001: Hibernate Validator 8.0.2.Final","thread_name":"background-preinit"}
+{"@timestamp":"2025-09-03T11:29:34.029Z","level":"INFO","logger_name":"com.dlyog.dl_creator.DlCreatorApplication","message":"Starting DlCreatorApplication v0.0.1-SNAPSHOT using Java 24.0.1 with PID 34217 (/Users/yogeshshekhawat/assignment/backend/dl_creator/target/dl_creator-0.0.1-SNAPSHOT.jar started by yogeshshekhawat in /Users/yogeshshekhawat/assignment/backend/dl_creator)","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:34.032Z","level":"DEBUG","logger_name":"com.dlyog.dl_creator.DlCreatorApplication","message":"Running with Spring Boot v3.5.4, Spring v6.2.9","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:34.032Z","level":"INFO","logger_name":"com.dlyog.dl_creator.DlCreatorApplication","message":"No active profile set, falling back to 1 default profile: \"default\"","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:34.900Z","level":"INFO","logger_name":"org.springframework.data.repository.config.RepositoryConfigurationDelegate","message":"Bootstrapping Spring Data JPA repositories in DEFAULT mode.","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:34.940Z","level":"INFO","logger_name":"org.springframework.data.repository.config.RepositoryConfigurationDelegate","message":"Finished Spring Data repository scanning in 33 ms. Found 3 JPA repository interfaces.","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:35.452Z","level":"INFO","logger_name":"org.springframework.boot.web.embedded.tomcat.TomcatWebServer","message":"Tomcat initialized with port 7500 (http)","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:35.468Z","level":"INFO","logger_name":"org.apache.coyote.http11.Http11NioProtocol","message":"Initializing ProtocolHandler [\"http-nio-0.0.0.0-7500\"]","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:35.472Z","level":"INFO","logger_name":"org.apache.catalina.core.StandardService","message":"Starting service [Tomcat]","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:35.472Z","level":"INFO","logger_name":"org.apache.catalina.core.StandardEngine","message":"Starting Servlet engine: [Apache Tomcat/10.1.43]","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:35.492Z","level":"INFO","logger_name":"org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]","message":"Initializing Spring embedded WebApplicationContext","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:35.492Z","level":"INFO","logger_name":"org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext","message":"Root WebApplicationContext: initialization completed in 1432 ms","thread_name":"main"}
+[otel.javaagent 2025-09-03 16:59:35:649 +0530] [main] WARN io.opentelemetry.api.GlobalOpenTelemetry - You are currently using the OpenTelemetry Instrumentation Java Agent; all GlobalOpenTelemetry.set calls are ignored - the agent provides the global OpenTelemetry object used by your application.
+java.lang.Throwable
+	at io.opentelemetry.api.GlobalOpenTelemetry.set(GlobalOpenTelemetry.java:105)
+	at io.opentelemetry.sdk.OpenTelemetrySdkBuilder.buildAndRegisterGlobal(OpenTelemetrySdkBuilder.java:85)
+	at com.dlyog.dl_creator.config.OpenTelemetryConfig.openTelemetry(OpenTelemetryConfig.java:42)
+	at com.dlyog.dl_creator.config.OpenTelemetryConfig$$SpringCGLIB$$0.CGLIB$openTelemetry$1(<generated>)
+	at com.dlyog.dl_creator.config.OpenTelemetryConfig$$SpringCGLIB$$FastClass$$1.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:258)
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:400)
+	at com.dlyog.dl_creator.config.OpenTelemetryConfig$$SpringCGLIB$$0.openTelemetry(<generated>)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:172)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiateWithFactoryMethod(SimpleInstantiationStrategy.java:89)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:169)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:489)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1375)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1205)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1683)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1628)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:913)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:546)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1375)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1205)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1683)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1628)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:913)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:546)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1375)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1205)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1745)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1628)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:913)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:546)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1375)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1205)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.addCandidateEntry(DefaultListableBeanFactory.java:2003)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.findAutowireCandidates(DefaultListableBeanFactory.java:1960)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveMultipleBeans(DefaultListableBeanFactory.java:1777)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1694)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory$DependencyObjectProvider.resolveStream(DefaultListableBeanFactory.java:2619)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory$DependencyObjectProvider.orderedStream(DefaultListableBeanFactory.java:2613)
+	at org.springframework.boot.actuate.autoconfigure.observation.ObservationRegistryConfigurer.asOrderedList(ObservationRegistryConfigurer.java:101)
+	at org.springframework.boot.actuate.autoconfigure.observation.ObservationRegistryConfigurer.lambda$registerHandlers$0(ObservationRegistryConfigurer.java:78)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory$DependencyObjectProvider.ifAvailable(DefaultListableBeanFactory.java:2543)
+	at org.springframework.boot.actuate.autoconfigure.observation.ObservationRegistryConfigurer.registerHandlers(ObservationRegistryConfigurer.java:77)
+	at org.springframework.boot.actuate.autoconfigure.observation.ObservationRegistryConfigurer.configure(ObservationRegistryConfigurer.java:71)
+	at org.springframework.boot.actuate.autoconfigure.observation.ObservationRegistryPostProcessor.postProcessAfterInitialization(ObservationRegistryPostProcessor.java:69)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsAfterInitialization(AbstractAutowireCapableBeanFactory.java:445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1829)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:607)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1745)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1628)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:913)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:546)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1375)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1205)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.getOrderedBeansOfType(ServletContextInitializerBeans.java:230)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.getOrderedBeansOfType(ServletContextInitializerBeans.java:221)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addServletContextInitializerBeans(ServletContextInitializerBeans.java:106)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.<init>(ServletContextInitializerBeans.java:95)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.getServletContextInitializerBeans(ServletWebServerApplicationContext.java:271)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.selfInitialize(ServletWebServerApplicationContext.java:245)
+	at org.springframework.boot.web.embedded.tomcat.TomcatStarter.onStartup(TomcatStarter.java:52)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4464)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328)
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:148)
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749)
+	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:772)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328)
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:148)
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749)
+	at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:203)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+	at org.apache.catalina.core.StandardService.startInternal(StandardService.java:412)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+	at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:870)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+	at org.apache.catalina.startup.Tomcat.start(Tomcat.java:438)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:128)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.<init>(TomcatWebServer.java:107)
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getTomcatWebServer(TomcatServletWebServerFactory.java:517)
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:219)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:193)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:167)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:621)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
+	at com.dlyog.dl_creator.DlCreatorApplication.main(DlCreatorApplication.java:10)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:102)
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64)
+	at org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40)
+{"@timestamp":"2025-09-03T11:29:35.909Z","level":"INFO","logger_name":"org.hibernate.jpa.internal.util.LogHelper","message":"HHH000204: Processing PersistenceUnitInfo [name: default]","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:35.947Z","level":"INFO","logger_name":"org.hibernate.Version","message":"HHH000412: Hibernate ORM core version 6.6.22.Final","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:35.969Z","level":"INFO","logger_name":"org.hibernate.cache.internal.RegionFactoryInitiator","message":"HHH000026: Second-level cache disabled","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:36.146Z","level":"INFO","logger_name":"org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo","message":"No LoadTimeWeaver setup: ignoring JPA class transformer","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:36.171Z","level":"INFO","logger_name":"com.zaxxer.hikari.HikariDataSource","message":"HikariPool-1 - Starting...","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:36.333Z","level":"INFO","logger_name":"com.zaxxer.hikari.pool.HikariPool","message":"HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:dl_creator_db user=SA","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:36.339Z","level":"INFO","logger_name":"com.zaxxer.hikari.HikariDataSource","message":"HikariPool-1 - Start completed.","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:36.362Z","level":"WARN","logger_name":"org.hibernate.orm.deprecation","message":"HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:36.379Z","level":"INFO","logger_name":"org.hibernate.orm.connections.pooling","message":"HHH10001005: Database info:\n\tDatabase JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']\n\tDatabase driver: undefined/unknown\n\tDatabase version: 2.3.232\n\tAutocommit mode: undefined/unknown\n\tIsolation level: undefined/unknown\n\tMinimum pool size: undefined/unknown\n\tMaximum pool size: undefined/unknown","thread_name":"main"}
 Hibernate: 
     create global temporary table HTE_driving_license(rn_ integer not null, user_id integer, expiration_date timestamp(6), id bigint, issue_date timestamp(6), address varchar(255), first_name varchar(255), last_name varchar(255), license_number varchar(255), vehicle_make varchar(255), vehicle_type varchar(255), license_status enum ('CANCELLED', 'DELIVERED', 'DISPATCHED', 'PENDING', 'PRINTED', 'SUBMITTED'), primary key (rn_)) TRANSACTIONAL
 Hibernate: 
     create global temporary table HTE_users(id integer, rn_ integer not null, created_at timestamp(6), updated_at timestamp(6), email varchar(100), full_name varchar(255), password varchar(255), primary key (rn_)) TRANSACTIONAL
-2025-08-29T04:03:58.787+05:30  INFO 80102 --- [dl_creator] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+{"@timestamp":"2025-09-03T11:29:37.089Z","level":"INFO","logger_name":"org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator","message":"HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)","thread_name":"main"}
 Hibernate: 
     drop table if exists driving_license cascade 
 Hibernate: 
@@ -87,85 +232,19 @@ Hibernate:
        add constraint FK6ut1gms63k4lxxx37taccntf7 
        foreign key (user_id) 
        references users
-2025-08-29T04:03:58.830+05:30  INFO 80102 --- [dl_creator] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-08-29T04:03:59.339+05:30  INFO 80102 --- [dl_creator] [           main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2025-08-29T04:03:59.339+05:30  WARN 80102 --- [dl_creator] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
-[otel.javaagent 2025-08-29 04:03:59:662 +0530] [main] WARN io.opentelemetry.api.GlobalOpenTelemetry - You are currently using the OpenTelemetry Instrumentation Java Agent; all GlobalOpenTelemetry.set calls are ignored - the agent provides the global OpenTelemetry object used by your application.
-java.lang.Throwable
-	at io.opentelemetry.api.GlobalOpenTelemetry.set(GlobalOpenTelemetry.java:105)
-	at io.opentelemetry.sdk.OpenTelemetrySdkBuilder.buildAndRegisterGlobal(OpenTelemetrySdkBuilder.java:85)
-	at com.dlyog.dl_creator.config.OpenTelemetryConfig.openTelemetry(OpenTelemetryConfig.java:29)
-	at com.dlyog.dl_creator.config.OpenTelemetryConfig$$SpringCGLIB$$0.CGLIB$openTelemetry$1(<generated>)
-	at com.dlyog.dl_creator.config.OpenTelemetryConfig$$SpringCGLIB$$FastClass$$1.invoke(<generated>)
-	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:258)
-	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:400)
-	at com.dlyog.dl_creator.config.OpenTelemetryConfig$$SpringCGLIB$$0.openTelemetry(<generated>)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:172)
-	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiateWithFactoryMethod(SimpleInstantiationStrategy.java:89)
-	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:169)
-	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653)
-	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:489)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1375)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1205)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1683)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1628)
-	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:913)
-	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
-	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:546)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1375)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1205)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1683)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1628)
-	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:913)
-	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
-	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1395)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1232)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1222)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1188)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1123)
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:987)
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627)
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
-	at com.dlyog.dl_creator.DlCreatorApplication.main(DlCreatorApplication.java:10)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:102)
-	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64)
-	at org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40)
-2025-08-29T04:03:59.694+05:30  INFO 80102 --- [dl_creator] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2025-08-29T04:04:00.667+05:30  INFO 80102 --- [dl_creator] [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:dl_creator_db'
-2025-08-29T04:04:00.957+05:30  INFO 80102 --- [dl_creator] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 7500 (http) with context path '/'
-2025-08-29T04:04:00.972+05:30  INFO 80102 --- [dl_creator] [           main] c.dlyog.dl_creator.DlCreatorApplication  : Started DlCreatorApplication in 5.722 seconds (process running for 7.626)
-2025-08-29T04:04:05.413+05:30  INFO 80102 --- [dl_creator] [nio-7500-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-08-29T04:04:05.414+05:30  INFO 80102 --- [dl_creator] [nio-7500-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2025-08-29T04:04:05.421+05:30  INFO 80102 --- [dl_creator] [nio-7500-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
-[otel.javaagent 2025-08-29 04:04:54:134 +0530] [OkHttp http://localhost:4317/...] ERROR io.opentelemetry.exporter.internal.grpc.GrpcExporter - Failed to export metrics. Server responded with UNIMPLEMENTED. This usually means that your collector is not configured with an otlp receiver in the "pipelines" section of the configuration. If export is not desired and you are using OpenTelemetry autoconfiguration or the javaagent, disable export by setting OTEL_METRICS_EXPORTER=none. Full error message: unknown service opentelemetry.proto.collector.metrics.v1.MetricsService
+{"@timestamp":"2025-09-03T11:29:37.126Z","level":"INFO","logger_name":"org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean","message":"Initialized JPA EntityManagerFactory for persistence unit 'default'","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:37.837Z","level":"DEBUG","logger_name":"com.dlyog.dl_creator.config.JwtAuthenticationFilter","message":"Filter 'jwtAuthenticationFilter' configured for use","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:37.970Z","level":"INFO","logger_name":"org.springframework.security.config.annotation.authentication.configuration.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer","message":"Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:37.971Z","level":"WARN","logger_name":"org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer","message":"Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:38.048Z","level":"INFO","logger_name":"org.springframework.data.jpa.repository.query.QueryEnhancerFactory","message":"Hibernate is in classpath; If applicable, HQL parser will be used.","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:39.016Z","level":"INFO","logger_name":"org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver","message":"Exposing 15 endpoints beneath base path '/actuator'","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:40.125Z","level":"INFO","logger_name":"org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration","message":"H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:dl_creator_db'","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:40.221Z","level":"INFO","logger_name":"org.apache.coyote.http11.Http11NioProtocol","message":"Starting ProtocolHandler [\"http-nio-0.0.0.0-7500\"]","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:40.247Z","level":"INFO","logger_name":"org.springframework.boot.web.embedded.tomcat.TomcatWebServer","message":"Tomcat started on port 7500 (http) with context path '/'","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:40.261Z","level":"INFO","logger_name":"com.dlyog.dl_creator.DlCreatorApplication","message":"Started DlCreatorApplication in 6.814 seconds (process running for 8.65)","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:42.368Z","level":"INFO","logger_name":"org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]","message":"Initializing Spring DispatcherServlet 'dispatcherServlet'","trace_id":"f063c0f940ed974a06500e98335cd6b5","trace_flags":"01","span_id":"950a813ddf5fda76","thread_name":"http-nio-0.0.0.0-7500-exec-1"}
+{"@timestamp":"2025-09-03T11:29:42.369Z","level":"INFO","logger_name":"org.springframework.web.servlet.DispatcherServlet","message":"Initializing Servlet 'dispatcherServlet'","trace_id":"f063c0f940ed974a06500e98335cd6b5","trace_flags":"01","span_id":"950a813ddf5fda76","thread_name":"http-nio-0.0.0.0-7500-exec-1"}
+{"@timestamp":"2025-09-03T11:29:42.370Z","level":"INFO","logger_name":"org.springframework.web.servlet.DispatcherServlet","message":"Completed initialization in 1 ms","trace_id":"f063c0f940ed974a06500e98335cd6b5","trace_flags":"01","span_id":"950a813ddf5fda76","thread_name":"http-nio-0.0.0.0-7500-exec-1"}
 Hibernate: 
     select
         u1_0.id,
@@ -649,3 +728,580 @@ Hibernate:
         users u1_0 
     where
         u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+=========Renewal Date: Wed Sep 03 17:13:27 IST 2025
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    join
+        users u1_0 
+            on u1_0.id=dl1_0.user_id 
+    where
+        dl1_0.id=?
+Hibernate: 
+    update
+        driving_license 
+    set
+        address=?,
+        expiration_date=?,
+        first_name=?,
+        issue_date=?,
+        last_name=?,
+        license_number=?,
+        license_status=?,
+        user_id=?,
+        vehicle_make=?,
+        vehicle_type=? 
+    where
+        id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    join
+        users u1_0 
+            on u1_0.id=dl1_0.user_id 
+    where
+        dl1_0.id=?
+Hibernate: 
+    update
+        driving_license 
+    set
+        address=?,
+        expiration_date=?,
+        first_name=?,
+        issue_date=?,
+        last_name=?,
+        license_number=?,
+        license_status=?,
+        user_id=?,
+        vehicle_make=?,
+        vehicle_type=? 
+    where
+        id=?

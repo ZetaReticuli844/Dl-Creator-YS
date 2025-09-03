@@ -5,6 +5,7 @@ import com.dlyog.dl_creator.Auth.dto.LoginUserDto;
 import com.dlyog.dl_creator.Auth.dto.RegisterUserDto;
 import com.dlyog.dl_creator.Auth.service.AuthenticationService;
 import com.dlyog.dl_creator.Auth.service.JwtService;
+import com.dlyog.dl_creator.TraceStuff;
 import com.dlyog.dl_creator.model.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +32,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(registeredUser);
     }
 
+    @TraceStuff("loginController")
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
         User authenticatedUser = authenticationService.authenticate(loginUserDto);

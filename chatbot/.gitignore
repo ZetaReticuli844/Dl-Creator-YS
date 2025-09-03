@@ -1,2 +1,3 @@
 models/
 rasa_env/
+.env

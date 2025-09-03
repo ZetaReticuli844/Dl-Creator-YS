@@ -97,6 +97,133 @@ services:
     restart: unless-stopped
     command: rasa run --port 5005 --cors "*" --enable-api --enable-cors --debug
 
+  # Cassandra Database for Jaeger
+  cassandra-dev:
+    image: cassandra:3.11
+    container_name: dl-creator-cassandra-dev
+    ports:
+      - "9042:9042"
+    environment:
+      - CASSANDRA_CLUSTER_NAME=jaeger
+      - CASSANDRA_DC=dc1
+      - CASSANDRA_RACK=rack1
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+    volumes:
+      - cassandra_dev_data:/var/lib/cassandra
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "cqlsh", "-e", "describe keyspaces"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  # Jaeger Schema Initialization
+  jaeger-schema-dev:
+    image: jaegertracing/jaeger-cassandra-schema:latest
+    container_name: dl-creator-jaeger-schema-dev
+    depends_on:
+      cassandra-dev:
+        condition: service_healthy
+    networks:
+      - dl-creator-network
+    restart: "no"
+    command: ["cassandra-dev", "3"]
+    environment:
+      - CQLSH_HOST=cassandra-dev
+      - CQLSH_PORT=9042
+      - CASSANDRA_PROTOCOL_VERSION=3
+      - CASSANDRA_KEYSPACE=jaeger_v1_dc1
+
+  # Jaeger Collector
+  jaeger-collector-dev:
+    image: jaegertracing/jaeger-collector:latest
+    container_name: dl-creator-jaeger-collector-dev
+    ports:
+      - "14250:14250"  # gRPC
+      - "14268:14268"  # HTTP
+      - "4317:4317"    # OTLP gRPC receiver
+      - "4318:4318"    # OTLP HTTP receiver
+    environment:
+      - SPAN_STORAGE_TYPE=cassandra
+      - CASSANDRA_SERVERS=cassandra-dev:9042
+      - CASSANDRA_KEYSPACE=jaeger_v1_dc1
+      - CASSANDRA_LOCAL_DC=dc1
+      - COLLECTOR_OTLP_ENABLED=true
+    depends_on:
+      - jaeger-schema-dev
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+
+  # Jaeger Query Service
+  jaeger-query-dev:
+    image: jaegertracing/jaeger-query:latest
+    container_name: dl-creator-jaeger-query-dev
+    ports:
+      - "16686:16686"  # Jaeger UI
+    environment:
+      - SPAN_STORAGE_TYPE=cassandra
+      - CASSANDRA_SERVERS=cassandra-dev:9042
+      - CASSANDRA_KEYSPACE=jaeger_v1_dc1
+      - CASSANDRA_LOCAL_DC=dc1
+    depends_on:
+      - jaeger-schema-dev
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+
+  # Jaeger Agent
+  jaeger-agent-dev:
+    image: jaegertracing/jaeger-agent:latest
+    container_name: dl-creator-jaeger-agent-dev
+    ports:
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+    environment:
+      - REPORTER_GRPC_HOST_PORT=jaeger-collector-dev:14250
+    depends_on:
+      - jaeger-collector-dev
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+
+  # Loki - Log Aggregation System
+  loki-dev:
+    image: grafana/loki:2.9.0
+    container_name: dl-creator-loki-dev
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki-config.yml:/etc/loki/local-config.yaml
+      - loki_dev_data:/loki
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+
+  # Promtail - Log Shipper
+  promtail-dev:
+    image: grafana/promtail:2.9.0
+    container_name: dl-creator-promtail-dev
+    volumes:
+      - ./promtail-config.yml:/etc/promtail/config.yml
+      - ./logs:/var/log
+      - /var/log:/var/log/host:ro
+    command: -config.file=/etc/promtail/config.yml
+    depends_on:
+      - loki-dev
+    networks:
+      - dl-creator-network
+    restart: unless-stopped
+
+volumes:
+  cassandra_dev_data:
+  loki_dev_data:
+
 networks:
   dl-creator-network:
     driver: bridge
