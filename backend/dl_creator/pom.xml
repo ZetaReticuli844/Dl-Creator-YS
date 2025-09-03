@@ -56,11 +56,19 @@
 			<version>1.5.0</version>
 		</dependency>
 
+
 		<!-- https://mvnrepository.com/artifact/io.opentelemetry/opentelemetry-exporter-otlp -->
 		<dependency>
 			<groupId>io.opentelemetry</groupId>
 			<artifactId>opentelemetry-exporter-otlp</artifactId>
 			<version>1.50.0</version>
+		</dependency>
+
+		<!-- OpenTelemetry Semantic Conventions -->
+		<dependency>
+			<groupId>io.opentelemetry.semconv</groupId>
+			<artifactId>opentelemetry-semconv</artifactId>
+			<version>1.25.0-alpha</version>
 		</dependency>
 
 		<dependency>

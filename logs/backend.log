@@ -1,10 +1,10 @@
 Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
-[otel.javaagent 2025-09-03 04:32:49:748 +0530] [main] INFO io.opentelemetry.javaagent.tooling.VersionLogger - opentelemetry-javaagent - version: 2.19.0
+[otel.javaagent 2025-09-03 16:59:31:813 +0530] [main] INFO io.opentelemetry.javaagent.tooling.VersionLogger - opentelemetry-javaagent - version: 2.19.0
 WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
 WARNING: sun.misc.Unsafe::objectFieldOffset has been called by net.bytebuddy.dynamic.loading.ClassInjector$UsingUnsafe$Dispatcher$CreationAction (file:/Users/yogeshshekhawat/assignment/backend/dl_creator/opentelemetry-javaagent.jar)
 WARNING: Please consider reporting this to the maintainers of class net.bytebuddy.dynamic.loading.ClassInjector$UsingUnsafe$Dispatcher$CreationAction
 WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
-04:32:52,163 |-WARN in ch.qos.logback.core.model.processor.AppenderModelHandler - Appender named [CONSOLE_DEV] not referenced. Skipping further processing.
+16:59:33,904 |-WARN in ch.qos.logback.core.model.processor.AppenderModelHandler - Appender named [CONSOLE_DEV] not referenced. Skipping further processing.
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -15,24 +15,24 @@ WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
 
  :: Spring Boot ::                (v3.5.4)
 
-{"@timestamp":"2025-09-02T23:02:52.211Z","level":"INFO","logger_name":"org.hibernate.validator.internal.util.Version","message":"HV000001: Hibernate Validator 8.0.2.Final","thread_name":"background-preinit"}
-{"@timestamp":"2025-09-02T23:02:52.277Z","level":"INFO","logger_name":"com.dlyog.dl_creator.DlCreatorApplication","message":"Starting DlCreatorApplication v0.0.1-SNAPSHOT using Java 24.0.1 with PID 37166 (/Users/yogeshshekhawat/assignment/backend/dl_creator/target/dl_creator-0.0.1-SNAPSHOT.jar started by yogeshshekhawat in /Users/yogeshshekhawat/assignment/backend/dl_creator)","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:52.279Z","level":"DEBUG","logger_name":"com.dlyog.dl_creator.DlCreatorApplication","message":"Running with Spring Boot v3.5.4, Spring v6.2.9","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:52.280Z","level":"INFO","logger_name":"com.dlyog.dl_creator.DlCreatorApplication","message":"No active profile set, falling back to 1 default profile: \"default\"","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:53.164Z","level":"INFO","logger_name":"org.springframework.data.repository.config.RepositoryConfigurationDelegate","message":"Bootstrapping Spring Data JPA repositories in DEFAULT mode.","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:53.211Z","level":"INFO","logger_name":"org.springframework.data.repository.config.RepositoryConfigurationDelegate","message":"Finished Spring Data repository scanning in 38 ms. Found 3 JPA repository interfaces.","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:53.824Z","level":"INFO","logger_name":"org.springframework.boot.web.embedded.tomcat.TomcatWebServer","message":"Tomcat initialized with port 7500 (http)","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:53.842Z","level":"INFO","logger_name":"org.apache.coyote.http11.Http11NioProtocol","message":"Initializing ProtocolHandler [\"http-nio-0.0.0.0-7500\"]","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:53.845Z","level":"INFO","logger_name":"org.apache.catalina.core.StandardService","message":"Starting service [Tomcat]","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:53.846Z","level":"INFO","logger_name":"org.apache.catalina.core.StandardEngine","message":"Starting Servlet engine: [Apache Tomcat/10.1.43]","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:53.868Z","level":"INFO","logger_name":"org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]","message":"Initializing Spring embedded WebApplicationContext","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:53.868Z","level":"INFO","logger_name":"org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext","message":"Root WebApplicationContext: initialization completed in 1552 ms","thread_name":"main"}
-[otel.javaagent 2025-09-03 04:32:54:041 +0530] [main] WARN io.opentelemetry.api.GlobalOpenTelemetry - You are currently using the OpenTelemetry Instrumentation Java Agent; all GlobalOpenTelemetry.set calls are ignored - the agent provides the global OpenTelemetry object used by your application.
+{"@timestamp":"2025-09-03T11:29:33.972Z","level":"INFO","logger_name":"org.hibernate.validator.internal.util.Version","message":"HV000001: Hibernate Validator 8.0.2.Final","thread_name":"background-preinit"}
+{"@timestamp":"2025-09-03T11:29:34.029Z","level":"INFO","logger_name":"com.dlyog.dl_creator.DlCreatorApplication","message":"Starting DlCreatorApplication v0.0.1-SNAPSHOT using Java 24.0.1 with PID 34217 (/Users/yogeshshekhawat/assignment/backend/dl_creator/target/dl_creator-0.0.1-SNAPSHOT.jar started by yogeshshekhawat in /Users/yogeshshekhawat/assignment/backend/dl_creator)","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:34.032Z","level":"DEBUG","logger_name":"com.dlyog.dl_creator.DlCreatorApplication","message":"Running with Spring Boot v3.5.4, Spring v6.2.9","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:34.032Z","level":"INFO","logger_name":"com.dlyog.dl_creator.DlCreatorApplication","message":"No active profile set, falling back to 1 default profile: \"default\"","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:34.900Z","level":"INFO","logger_name":"org.springframework.data.repository.config.RepositoryConfigurationDelegate","message":"Bootstrapping Spring Data JPA repositories in DEFAULT mode.","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:34.940Z","level":"INFO","logger_name":"org.springframework.data.repository.config.RepositoryConfigurationDelegate","message":"Finished Spring Data repository scanning in 33 ms. Found 3 JPA repository interfaces.","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:35.452Z","level":"INFO","logger_name":"org.springframework.boot.web.embedded.tomcat.TomcatWebServer","message":"Tomcat initialized with port 7500 (http)","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:35.468Z","level":"INFO","logger_name":"org.apache.coyote.http11.Http11NioProtocol","message":"Initializing ProtocolHandler [\"http-nio-0.0.0.0-7500\"]","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:35.472Z","level":"INFO","logger_name":"org.apache.catalina.core.StandardService","message":"Starting service [Tomcat]","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:35.472Z","level":"INFO","logger_name":"org.apache.catalina.core.StandardEngine","message":"Starting Servlet engine: [Apache Tomcat/10.1.43]","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:35.492Z","level":"INFO","logger_name":"org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]","message":"Initializing Spring embedded WebApplicationContext","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:35.492Z","level":"INFO","logger_name":"org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext","message":"Root WebApplicationContext: initialization completed in 1432 ms","thread_name":"main"}
+[otel.javaagent 2025-09-03 16:59:35:649 +0530] [main] WARN io.opentelemetry.api.GlobalOpenTelemetry - You are currently using the OpenTelemetry Instrumentation Java Agent; all GlobalOpenTelemetry.set calls are ignored - the agent provides the global OpenTelemetry object used by your application.
 java.lang.Throwable
 	at io.opentelemetry.api.GlobalOpenTelemetry.set(GlobalOpenTelemetry.java:105)
 	at io.opentelemetry.sdk.OpenTelemetrySdkBuilder.buildAndRegisterGlobal(OpenTelemetrySdkBuilder.java:85)
-	at com.dlyog.dl_creator.config.OpenTelemetryConfig.openTelemetry(OpenTelemetryConfig.java:29)
-	at com.dlyog.dl_creator.config.OpenTelemetryConfig$$SpringCGLIB$$0.CGLIB$openTelemetry$0(<generated>)
+	at com.dlyog.dl_creator.config.OpenTelemetryConfig.openTelemetry(OpenTelemetryConfig.java:42)
+	at com.dlyog.dl_creator.config.OpenTelemetryConfig$$SpringCGLIB$$0.CGLIB$openTelemetry$1(<generated>)
 	at com.dlyog.dl_creator.config.OpenTelemetryConfig$$SpringCGLIB$$FastClass$$1.invoke(<generated>)
 	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:258)
 	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:400)
@@ -176,20 +176,20 @@ java.lang.Throwable
 	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:102)
 	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64)
 	at org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40)
-{"@timestamp":"2025-09-02T23:02:54.337Z","level":"INFO","logger_name":"org.hibernate.jpa.internal.util.LogHelper","message":"HHH000204: Processing PersistenceUnitInfo [name: default]","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:54.388Z","level":"INFO","logger_name":"org.hibernate.Version","message":"HHH000412: Hibernate ORM core version 6.6.22.Final","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:54.422Z","level":"INFO","logger_name":"org.hibernate.cache.internal.RegionFactoryInitiator","message":"HHH000026: Second-level cache disabled","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:54.663Z","level":"INFO","logger_name":"org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo","message":"No LoadTimeWeaver setup: ignoring JPA class transformer","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:54.689Z","level":"INFO","logger_name":"com.zaxxer.hikari.HikariDataSource","message":"HikariPool-1 - Starting...","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:54.886Z","level":"INFO","logger_name":"com.zaxxer.hikari.pool.HikariPool","message":"HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:dl_creator_db user=SA","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:54.892Z","level":"INFO","logger_name":"com.zaxxer.hikari.HikariDataSource","message":"HikariPool-1 - Start completed.","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:54.923Z","level":"WARN","logger_name":"org.hibernate.orm.deprecation","message":"HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:54.949Z","level":"INFO","logger_name":"org.hibernate.orm.connections.pooling","message":"HHH10001005: Database info:\n\tDatabase JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']\n\tDatabase driver: undefined/unknown\n\tDatabase version: 2.3.232\n\tAutocommit mode: undefined/unknown\n\tIsolation level: undefined/unknown\n\tMinimum pool size: undefined/unknown\n\tMaximum pool size: undefined/unknown","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:35.909Z","level":"INFO","logger_name":"org.hibernate.jpa.internal.util.LogHelper","message":"HHH000204: Processing PersistenceUnitInfo [name: default]","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:35.947Z","level":"INFO","logger_name":"org.hibernate.Version","message":"HHH000412: Hibernate ORM core version 6.6.22.Final","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:35.969Z","level":"INFO","logger_name":"org.hibernate.cache.internal.RegionFactoryInitiator","message":"HHH000026: Second-level cache disabled","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:36.146Z","level":"INFO","logger_name":"org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo","message":"No LoadTimeWeaver setup: ignoring JPA class transformer","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:36.171Z","level":"INFO","logger_name":"com.zaxxer.hikari.HikariDataSource","message":"HikariPool-1 - Starting...","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:36.333Z","level":"INFO","logger_name":"com.zaxxer.hikari.pool.HikariPool","message":"HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:dl_creator_db user=SA","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:36.339Z","level":"INFO","logger_name":"com.zaxxer.hikari.HikariDataSource","message":"HikariPool-1 - Start completed.","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:36.362Z","level":"WARN","logger_name":"org.hibernate.orm.deprecation","message":"HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:36.379Z","level":"INFO","logger_name":"org.hibernate.orm.connections.pooling","message":"HHH10001005: Database info:\n\tDatabase JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']\n\tDatabase driver: undefined/unknown\n\tDatabase version: 2.3.232\n\tAutocommit mode: undefined/unknown\n\tIsolation level: undefined/unknown\n\tMinimum pool size: undefined/unknown\n\tMaximum pool size: undefined/unknown","thread_name":"main"}
 Hibernate: 
     create global temporary table HTE_driving_license(rn_ integer not null, user_id integer, expiration_date timestamp(6), id bigint, issue_date timestamp(6), address varchar(255), first_name varchar(255), last_name varchar(255), license_number varchar(255), vehicle_make varchar(255), vehicle_type varchar(255), license_status enum ('CANCELLED', 'DELIVERED', 'DISPATCHED', 'PENDING', 'PRINTED', 'SUBMITTED'), primary key (rn_)) TRANSACTIONAL
 Hibernate: 
     create global temporary table HTE_users(id integer, rn_ integer not null, created_at timestamp(6), updated_at timestamp(6), email varchar(100), full_name varchar(255), password varchar(255), primary key (rn_)) TRANSACTIONAL
-{"@timestamp":"2025-09-02T23:02:55.801Z","level":"INFO","logger_name":"org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator","message":"HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:37.089Z","level":"INFO","logger_name":"org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator","message":"HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)","thread_name":"main"}
 Hibernate: 
     drop table if exists driving_license cascade 
 Hibernate: 
@@ -232,16 +232,1076 @@ Hibernate:
        add constraint FK6ut1gms63k4lxxx37taccntf7 
        foreign key (user_id) 
        references users
-{"@timestamp":"2025-09-02T23:02:55.849Z","level":"INFO","logger_name":"org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean","message":"Initialized JPA EntityManagerFactory for persistence unit 'default'","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:56.395Z","level":"DEBUG","logger_name":"com.dlyog.dl_creator.config.JwtAuthenticationFilter","message":"Filter 'jwtAuthenticationFilter' configured for use","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:56.501Z","level":"INFO","logger_name":"org.springframework.security.config.annotation.authentication.configuration.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer","message":"Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:56.502Z","level":"WARN","logger_name":"org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer","message":"Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:56.572Z","level":"INFO","logger_name":"org.springframework.data.jpa.repository.query.QueryEnhancerFactory","message":"Hibernate is in classpath; If applicable, HQL parser will be used.","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:58.253Z","level":"INFO","logger_name":"org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver","message":"Exposing 15 endpoints beneath base path '/actuator'","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:58.876Z","level":"INFO","logger_name":"org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration","message":"H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:dl_creator_db'","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:58.972Z","level":"INFO","logger_name":"org.apache.coyote.http11.Http11NioProtocol","message":"Starting ProtocolHandler [\"http-nio-0.0.0.0-7500\"]","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:59.001Z","level":"INFO","logger_name":"org.springframework.boot.web.embedded.tomcat.TomcatWebServer","message":"Tomcat started on port 7500 (http) with context path '/'","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:02:59.014Z","level":"INFO","logger_name":"com.dlyog.dl_creator.DlCreatorApplication","message":"Started DlCreatorApplication in 7.285 seconds (process running for 9.457)","thread_name":"main"}
-{"@timestamp":"2025-09-02T23:03:01.583Z","level":"INFO","logger_name":"org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]","message":"Initializing Spring DispatcherServlet 'dispatcherServlet'","trace_id":"28e80af2ed90aaf6830e017816b306f8","trace_flags":"01","span_id":"82aeb8e8ab94cde5","thread_name":"http-nio-0.0.0.0-7500-exec-1"}
-{"@timestamp":"2025-09-02T23:03:01.603Z","level":"INFO","logger_name":"org.springframework.web.servlet.DispatcherServlet","message":"Initializing Servlet 'dispatcherServlet'","trace_id":"28e80af2ed90aaf6830e017816b306f8","trace_flags":"01","span_id":"82aeb8e8ab94cde5","thread_name":"http-nio-0.0.0.0-7500-exec-1"}
-{"@timestamp":"2025-09-02T23:03:01.622Z","level":"INFO","logger_name":"org.springframework.web.servlet.DispatcherServlet","message":"Completed initialization in 2 ms","trace_id":"28e80af2ed90aaf6830e017816b306f8","trace_flags":"01","span_id":"82aeb8e8ab94cde5","thread_name":"http-nio-0.0.0.0-7500-exec-1"}
+{"@timestamp":"2025-09-03T11:29:37.126Z","level":"INFO","logger_name":"org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean","message":"Initialized JPA EntityManagerFactory for persistence unit 'default'","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:37.837Z","level":"DEBUG","logger_name":"com.dlyog.dl_creator.config.JwtAuthenticationFilter","message":"Filter 'jwtAuthenticationFilter' configured for use","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:37.970Z","level":"INFO","logger_name":"org.springframework.security.config.annotation.authentication.configuration.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer","message":"Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:37.971Z","level":"WARN","logger_name":"org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer","message":"Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:38.048Z","level":"INFO","logger_name":"org.springframework.data.jpa.repository.query.QueryEnhancerFactory","message":"Hibernate is in classpath; If applicable, HQL parser will be used.","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:39.016Z","level":"INFO","logger_name":"org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver","message":"Exposing 15 endpoints beneath base path '/actuator'","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:40.125Z","level":"INFO","logger_name":"org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration","message":"H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:dl_creator_db'","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:40.221Z","level":"INFO","logger_name":"org.apache.coyote.http11.Http11NioProtocol","message":"Starting ProtocolHandler [\"http-nio-0.0.0.0-7500\"]","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:40.247Z","level":"INFO","logger_name":"org.springframework.boot.web.embedded.tomcat.TomcatWebServer","message":"Tomcat started on port 7500 (http) with context path '/'","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:40.261Z","level":"INFO","logger_name":"com.dlyog.dl_creator.DlCreatorApplication","message":"Started DlCreatorApplication in 6.814 seconds (process running for 8.65)","thread_name":"main"}
+{"@timestamp":"2025-09-03T11:29:42.368Z","level":"INFO","logger_name":"org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]","message":"Initializing Spring DispatcherServlet 'dispatcherServlet'","trace_id":"f063c0f940ed974a06500e98335cd6b5","trace_flags":"01","span_id":"950a813ddf5fda76","thread_name":"http-nio-0.0.0.0-7500-exec-1"}
+{"@timestamp":"2025-09-03T11:29:42.369Z","level":"INFO","logger_name":"org.springframework.web.servlet.DispatcherServlet","message":"Initializing Servlet 'dispatcherServlet'","trace_id":"f063c0f940ed974a06500e98335cd6b5","trace_flags":"01","span_id":"950a813ddf5fda76","thread_name":"http-nio-0.0.0.0-7500-exec-1"}
+{"@timestamp":"2025-09-03T11:29:42.370Z","level":"INFO","logger_name":"org.springframework.web.servlet.DispatcherServlet","message":"Completed initialization in 1 ms","trace_id":"f063c0f940ed974a06500e98335cd6b5","trace_flags":"01","span_id":"950a813ddf5fda76","thread_name":"http-nio-0.0.0.0-7500-exec-1"}
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        next value for users_seq
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at, email, full_name, password, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        next value for driving_license_seq
+Hibernate: 
+    insert 
+    into
+        driving_license
+        (address, expiration_date, first_name, issue_date, last_name, license_number, license_status, user_id, vehicle_make, vehicle_type, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+=========Renewal Date: Wed Sep 03 17:13:27 IST 2025
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    join
+        users u1_0 
+            on u1_0.id=dl1_0.user_id 
+    where
+        dl1_0.id=?
+Hibernate: 
+    update
+        driving_license 
+    set
+        address=?,
+        expiration_date=?,
+        first_name=?,
+        issue_date=?,
+        last_name=?,
+        license_number=?,
+        license_status=?,
+        user_id=?,
+        vehicle_make=?,
+        vehicle_type=? 
+    where
+        id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    where
+        dl1_0.user_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        dl1_0.id,
+        dl1_0.address,
+        dl1_0.expiration_date,
+        dl1_0.first_name,
+        dl1_0.issue_date,
+        dl1_0.last_name,
+        dl1_0.license_number,
+        dl1_0.license_status,
+        dl1_0.user_id,
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.password,
+        u1_0.updated_at,
+        dl1_0.vehicle_make,
+        dl1_0.vehicle_type 
+    from
+        driving_license dl1_0 
+    join
+        users u1_0 
+            on u1_0.id=dl1_0.user_id 
+    where
+        dl1_0.id=?
+Hibernate: 
+    update
+        driving_license 
+    set
+        address=?,
+        expiration_date=?,
+        first_name=?,
+        issue_date=?,
+        last_name=?,
+        license_number=?,
+        license_status=?,
+        user_id=?,
+        vehicle_make=?,
+        vehicle_type=? 
+    where
+        id=?

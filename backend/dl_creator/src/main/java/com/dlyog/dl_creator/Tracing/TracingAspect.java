@@ -17,13 +17,22 @@ public class TracingAspect {
 
     @Around("@annotation(traceStuff)")
     public Object traceMethod(ProceedingJoinPoint pjp, TraceStuff traceStuff) throws Throwable {
-        Span span = tracer.spanBuilder(traceStuff.value()).startSpan();
+        // Use the annotation value as span name, fallback to method name if empty
+        String spanName = traceStuff.value().isEmpty() 
+            ? pjp.getSignature().getName() 
+            : traceStuff.value();
+            
+        Span span = tracer.spanBuilder(spanName)
+                .setAttribute("method.name", pjp.getSignature().getName())
+                .setAttribute("class.name", pjp.getTarget().getClass().getSimpleName())
+                .startSpan();
 
         try (var scope = span.makeCurrent()) {
             return pjp.proceed();
         } catch (Throwable t) {
             span.recordException(t);
             span.setAttribute("error", true);
+            span.setAttribute("error.message", t.getMessage());
             throw t;
         } finally {
             span.end();
